@@ -1,4 +1,4 @@
-# Point Of Sales
+# Point Of Sales v1
 This web is still development stage.
 
 
