@@ -43,7 +43,7 @@ php artisan serve
 
 ## Tech Stack:
 
-- Frontend: AdminLTE v4
+- Frontend: Laravel Jetstream, AdminLTE v4
 - Backend: Laravel 11, MySQL, Git, Github
 
 
