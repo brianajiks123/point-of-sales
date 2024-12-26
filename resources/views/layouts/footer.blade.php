@@ -1,13 +1,8 @@
-<!--begin::Footer-->
-<footer class="app-footer">
-    <!--begin::To the end-->
-    <div class="float-end d-none d-sm-inline">{{ config('app.name') }}</div>
-    <!--end::To the end-->
-    <!--begin::Copyright-->
+<footer class="main-footer">
     <strong>
         &copy; {{ date('Y') }}
-        <a href="" class="text-decoration-none">Brian Aji P. </a>
-    </strong>
-    <!--end::Copyright-->
+        <a href="">Brian Aji P. </a>
+        <div class="float-right d-none d-sm-inline-block">
+            <b>Point Of Sales</b> version 1.0
+        </div>
 </footer>
-<!--end::Footer-->
