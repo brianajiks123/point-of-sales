@@ -3,48 +3,61 @@
 @section('login')
     <div class="login-box">
         <!-- /.login-logo -->
-        <div class="card">
-            <div class="card-body login-card-body">
-                <div class="login-logo">
-                    <a href="{{ url('/') }}"><b>Point Of Sale </b>v1</a>
-                </div>
-                <p class="login-box-msg">Sign in to start your session</p>
+        <div class="card card-outline card-primary">
+            <div class="card-header text-center">
+                <a href="/" class="h1"><b>Point Of Sale </b>v1</a>
+            </div>
+            <div class="card-body">
+                <p class="login-box-msg">Login to start your session</p>
+
                 <form action="{{ route('login') }}" method="post">
                     @csrf
-                    <div class="input-group">
-                        <input type="email" name="email" class="form-control" placeholder="Email"
-                            value="{{ old('email') }}" required />
-                        <div class="input-group-text"><span class="bi bi-envelope"></span></div>
+                    <div class="form-group">
+                        @error('email')
+                            <label class="col-form-label text-danger" for="inputError" style="font-size: 14px;">
+                                <i class="far fa-times-circle"></i> {{ $message }}
+                            </label>
+                        @enderror
+                        <div class="input-group mb-3">
+                            <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
+                                id="inputError" placeholder="Email" value="{{ old('email') }}" required />
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-envelope"></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    @error('email')
-                        <small class="text-danger">{{ $message }}</small>
-                    @enderror
-
-                    <div class="input-group mt-3">
+                    <div class="input-group mb-3">
                         <input type="password" name="password" class="form-control" placeholder="Password" required />
-                        <div class="input-group-text"><span class="bi bi-lock-fill"></span></div>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
                     </div>
-
-                    <!--begin::Row-->
-                    <div class="row mt-4">
+                    <div class="row">
                         <div class="col-8">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                                <label class="form-check-label" for="flexCheckDefault"> Remember Me </label>
+                            <div class="icheck-primary">
+                                <input type="checkbox" name="remember_me" id="remember" />
+                                <label for="remember"> Remember Me </label>
                             </div>
                         </div>
                         <!-- /.col -->
                         <div class="col-4">
-                            <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-primary">Login</button>
-                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Login</button>
                         </div>
                         <!-- /.col -->
                     </div>
-                    <!--end::Row-->
                 </form>
+
+                {{-- <p class="mb-0 mt-3">
+                    <a href="{{ url('/register') }}" class="text-center">Register a new membership</a>
+                </p> --}}
             </div>
-            <!-- /.login-card-body -->
+            <!-- /.card-body -->
         </div>
+        <!-- /.card -->
     </div>
+    <!-- /.login-box -->
 @endsection
