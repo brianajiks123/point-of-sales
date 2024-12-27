@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 // Login
@@ -19,4 +20,9 @@ Route::middleware([
     // Category
     Route::get('/category/data', [CategoryController::class, "data"])->name("category.data");
     Route::resource('/category', CategoryController::class);
+
+    // Product
+    Route::get('/product/data', [ProductController::class, "data"])->name("product.data");
+    Route::resource('/product', ProductController::class);
+    Route::post('/product/delete-selected', [ProductController::class, "deleteSelected"])->name("product.deleteSelected");
 });
