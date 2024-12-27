@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    <h3 class="mb-0">Category</h3>
+    <h3 class="mb-0">List Category</h3>
 @endsection
 
 @section('breadcumb')
@@ -28,11 +28,11 @@
                             <table id="category_table" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <td>#</td>
-                                        <td>Category</td>
-                                        <td>
+                                        <th>#</th>
+                                        <th>Category</th>
+                                        <th>
                                             <i class="nav-icon fas fa-cog"></i>
-                                        </td>
+                                        </th>
                                     </tr>
                                 </thead>
                             </table>
@@ -80,25 +80,25 @@
                         }
                     ]
                 });
-        });
 
-        // Validator
-        $("#modalForm").validator().on("submit", function(e) {
-            if (!e.preventDefault()) {
-                $.post($("#modalForm form").attr("action"), $("#modalForm form").serialize())
-                    .done((response) => {
-                        // Success
-                        $("#modalForm").modal("hide");
+            // Validator
+            $("#modalForm").validator().on("submit", function(e) {
+                if (!e.preventDefault()) {
+                    $.post($("#modalForm form").attr("action"), $("#modalForm form").serialize())
+                        .done((response) => {
+                            // Success
+                            $("#modalForm").modal("hide");
 
-                        category_table.ajax.reload();
-                    })
-                    .fail((errors) => {
-                        // Failed
-                        alert("Failed to save data!");
+                            category_table.ajax.reload();
+                        })
+                        .fail((errors) => {
+                            // Failed
+                            alert("Failed to save data!");
 
-                        return;
-                    });
-            }
+                            return;
+                        });
+                }
+            });
         });
 
         // Function: Add Category
@@ -109,7 +109,6 @@
             $("#modalForm form")[0].reset();
             $("#modalForm form").attr("action", url);
             $("#modalForm [name=_method]").val("POST");
-            $("#modalForm [name=name]").focus();
         }
 
         // Function: Edit Category
@@ -120,7 +119,6 @@
             $("#modalForm form")[0].reset();
             $("#modalForm form").attr("action", url);
             $("#modalForm [name=_method]").val("PUT");
-            $("#modalForm [name=name]").focus();
 
             // Get Data
             $.get(url)

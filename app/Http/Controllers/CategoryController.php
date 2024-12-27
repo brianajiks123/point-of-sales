@@ -35,9 +35,7 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        $category = Category::create([
-            "name" => $request->name
-        ]);
+        $category = Category::create($request->all());
 
         if ($category) {
             return response()->json("Add category successfully.", 201);
