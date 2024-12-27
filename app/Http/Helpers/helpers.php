@@ -1,7 +1,7 @@
 <?php
 
 // Money Format: IDR
-function money_format($number)
+function indonesia_money_format($number)
 {
     return number_format($number, 0, ".", ".");
 }
@@ -67,6 +67,11 @@ function indonesia_date($dt, $day_show = true)
     $dt_obj = new DateTime($dt);
     $day = $day_show ? $day_name[$dt_obj->format('w')] . ', ' : '';
     $formattedDate = $dt_obj->format('d') . ' ' . $month_name[(int)$dt_obj->format('m')] . ' ' . $dt_obj->format('Y');
-    
+
     return $day . $formattedDate;
+}
+
+//
+function code_generator($val, $threshold = null) {
+    return sprintf("%0" . $threshold . "s", $val);
 }
