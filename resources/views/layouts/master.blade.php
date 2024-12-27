@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name') }} | Dashboard</title>
+    <title>{{ config('app.name') }} | {{ $menu }}</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -31,48 +31,6 @@
 <!--begin::Body-->
 
 <body class="hold-transition sidebar-mini layout-fixed">
-    <!--begin::App Wrapper-->
-    {{-- <div class="wrapper">
-        <!-- Preloader -->
-        <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="{{ asset('admin/img/AdminLTELogo.png') }}" alt="AdminLTELogo"
-                height="60" width="60" />
-        </div>
-
-        @includeIf('layouts.header')
-
-        @includeIf('layouts.sidebar')
-
-        <div class="content-wrappper">
-            <div class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            @yield('title')
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                @section('breadcumb')
-                                    <li class="breadcrumb-item"><a href="/">Home</a></li>
-                                @show
-                            </ol>
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-                </div>
-                <!-- /.container-fluid -->
-            </div>
-
-            <section class="content">
-                @yield('content')
-            </section>
-        </div>
-
-        @includeIf('layouts.footer')
-    </div> --}}
-
     <div class="wrapper">
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">

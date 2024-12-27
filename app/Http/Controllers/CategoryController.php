@@ -9,7 +9,9 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        return view("category.index");
+        $menu = "Category";
+
+        return view("category.index", compact("menu"));
     }
 
     public function data()
