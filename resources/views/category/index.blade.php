@@ -25,20 +25,17 @@
                         <!-- /.card-header -->
 
                         <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-hovered"
-                                    id="category_table">
-                                    <thead>
-                                        <tr>
-                                            <td>#</td>
-                                            <td>Category</td>
-                                            <td>
-                                                <i class="nav-icon fas fa-cog"></i>
-                                            </td>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
+                            <table id="category_table" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <td>#</td>
+                                        <td>Category</td>
+                                        <td>
+                                            <i class="nav-icon fas fa-cog"></i>
+                                        </td>
+                                    </tr>
+                                </thead>
+                            </table>
                         </div>
                         <!-- ./card-body -->
                     </div>
@@ -59,52 +56,49 @@
         let category_table;
 
         $(function() {
-            category_table = $("#category_table").DataTable({
-                paging: true,
-                lengthChange: false,
-                searching: false,
-                ordering: true,
-                info: true,
-                autoWidth: false,
-                responsive: true,
-                processing: true,
-                ajax: {
-                    url: "{{ route('category.data') }}",
-                },
-                columns: [{
-                        data: "DT_RowIndex",
-                        searchable: false,
-                        sortable: false
+            category_table = $("#category_table")
+                .DataTable({
+                    responsive: true,
+                    lengthChange: false,
+                    autoWidth: false,
+                    processing: true,
+                    ajax: {
+                        url: "{{ route('category.data') }}",
                     },
-                    {
-                        data: "name"
-                    },
-                    {
-                        data: "action",
-                        searchable: false,
-                        sortable: false
-                    }
-                ]
-            });
+                    columns: [{
+                            data: "DT_RowIndex",
+                            searchable: false,
+                            sortable: false
+                        },
+                        {
+                            data: "name"
+                        },
+                        {
+                            data: "action",
+                            searchable: false,
+                            sortable: false
+                        }
+                    ]
+                });
+        });
 
-            // Validator
-            $("#modalForm").validator().on("submit", function(e) {
-                if (!e.preventDefault()) {
-                    $.post($("#modalForm form").attr("action"), $("#modalForm form").serialize())
-                        .done((response) => {
-                            // Success
-                            $("#modalForm").modal("hide");
+        // Validator
+        $("#modalForm").validator().on("submit", function(e) {
+            if (!e.preventDefault()) {
+                $.post($("#modalForm form").attr("action"), $("#modalForm form").serialize())
+                    .done((response) => {
+                        // Success
+                        $("#modalForm").modal("hide");
 
-                            category_table.ajax.reload();
-                        })
-                        .fail((errors) => {
-                            // Failed
-                            alert("Failed to save data!");
+                        category_table.ajax.reload();
+                    })
+                    .fail((errors) => {
+                        // Failed
+                        alert("Failed to save data!");
 
-                            return;
-                        });
-                }
-            });
+                        return;
+                    });
+            }
         });
 
         // Function: Add Category

@@ -22,7 +22,6 @@
     <!-- DataTables -->
     <link rel="stylesheet" href="{{ asset('admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
 
     <!-- jQuery -->
     <script src="{{ asset('admin/plugins/jquery/jquery.min.js') }}"></script>
@@ -133,6 +132,8 @@
     <!-- DataTables  & Plugins -->
     <script src="{{ asset('admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('admin/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('admin/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
     {{-- Bootstrap Validator --}}
     <script src="{{ asset('admin/js/validator.min.js') }}"></script>
 
