@@ -25,4 +25,5 @@ Route::middleware([
     Route::get('/product/data', [ProductController::class, "data"])->name("product.data");
     Route::resource('/product', ProductController::class);
     Route::post('/product/delete-selected', [ProductController::class, "deleteSelected"])->name("product.deleteSelected");
+    Route::post('/product/print-barcode', [ProductController::class, "printBarcode"])->name("product.printBarcode");
 });
