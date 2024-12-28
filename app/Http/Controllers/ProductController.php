@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -110,12 +111,28 @@ class ProductController extends Controller
     {
         foreach ($request->product_id as $product_id) {
             $product = Product::findOrFail($product_id);
-            
+
             if ($product) {
                 $product->delete();
             }
         }
 
         return response()->json("Delete selected product successfully.");
+    }
+
+    public function printBarcode(Request $request)
+    {
+        foreach ($request->product_id as $product_id) {
+            $product = Product::findOrFail($product_id);
+
+            if ($product) {
+                $data_product[] = $product;
+            }
+        }
+
+        $pdf = Pdf::loadView('product.barcode', compact("data_product"));
+        $pdf->setPaper("a4", "potrait");
+
+        return $pdf->stream("product.pdf");
     }
 }
