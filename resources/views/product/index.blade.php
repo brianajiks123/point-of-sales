@@ -25,11 +25,14 @@
                                 onclick="deleteProductSelected('{{ route('product.deleteSelected') }}')">
                                 <i class="nav-icon fas fa-trash"></i> Delete
                             </button>
+                            <button class="btn btn-info xs" onclick="printBarcode('{{ route('product.printBarcode') }}')">
+                                <i class="nav-icon fas fa-barcode"></i> Print Barcode
+                            </button>
                         </div>
                         <!-- /.card-header -->
 
                         <div class="card-body">
-                            <form class="product_form">
+                            <form class="product_form" method="post">
                                 @csrf
                                 <table id="product_table" class="table table-bordered table-striped">
                                     <thead>
@@ -206,6 +209,7 @@
                     });
             }
         }
+
         // Function: Delete Product Selected
         function deleteProductSelected(url) {
             total_selected = $("input:checked").length;
@@ -227,6 +231,24 @@
             } else {
                 alert("Choose data that will be deleted!");
                 return;
+            }
+        }
+
+        // Function: Print Barcode
+        function printBarcode(url) {
+            total_selected = $("input:checked").length;
+
+            if (total_selected < 1) {
+                alert("Choose data that will be printed!");
+                return;
+            } else if (total_selected < 3) {
+                alert("Choose min. 3 data to printed!");
+                return;
+            } else {
+                $(".product_form")
+                    .attr("action", url)
+                    .attr("target", "_blank")
+                    .submit();
             }
         }
     </script>
