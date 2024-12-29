@@ -31,8 +31,8 @@ class MemberController extends Controller
             ->addColumn("action", function ($member) {
                 return "
                     <div class='btn-group'>
-                        <button class='btn btn-xs btn-warning mr-3' onclick='editMember(`" . route("member.update", $member->id) . "`)'><i class='fa fa-pencil-alt'></i></button>
-                        <button class='btn btn-xs btn-danger' onclick='deleteMember(`" . route("member.destroy", $member->id) . "`)'><i class='fa fa-trash-alt'></i></button>
+                        <button type='button' class='btn btn-xs btn-warning mr-3' onclick='editMember(`" . route("member.update", $member->id) . "`)'><i class='fa fa-pencil-alt'></i></button>
+                        <button type='button' class='btn btn-xs btn-danger' onclick='deleteMember(`" . route("member.destroy", $member->id) . "`)'><i class='fa fa-trash-alt'></i></button>
                     </div>
                 ";
             })
@@ -43,7 +43,7 @@ class MemberController extends Controller
     public function store(Request $request)
     {
         $latest_member = Member::latest()->first();
-        $member_code = $latest_member ? $latest_member->member_code + 1 : 1;
+        $member_code = $latest_member ? ($latest_member->member_code + 1) : 1;
 
         Member::create([
             'member_code' => code_generator($member_code, 5),
@@ -65,7 +65,7 @@ class MemberController extends Controller
     public function update(Request $request, string $id)
     {
         $member = Member::findOrFail($id);
-        
+
         if ($member) {
             $member->update($request->all());
 
@@ -76,7 +76,7 @@ class MemberController extends Controller
     public function destroy(string $id)
     {
         $member = Member::findOrFail($id);
-        
+
         if ($member) {
             $member->delete();
 
@@ -104,16 +104,13 @@ class MemberController extends Controller
     public function printMember(Request $request)
     {
         if ($request->has('member_id') && is_array($request->member_id)) {
-            $data_member = collect(array());
-            $data_member_id = explode(",", $request->member_id[0]);
+            $data_member = array();
+            $data_member_id = $request->member_id;
 
             foreach ($data_member_id as $member_id) {
                 $member = Member::findOrFail($member_id);
                 $data_member[] = $member;
             }
-
-            // Divide 2 item array
-            $data_member = $data_member->chunk(2);
 
             $pdf = Pdf::loadView('member.print', compact('data_member'));
             $pdf->setPaper(array(0, 0, 566.93, 850.39), "portrait");

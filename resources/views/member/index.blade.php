@@ -28,26 +28,26 @@
                             </button>
                         </div>
                         <div class="card-body">
-                            <table id="member_table" class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <form method="post" class="member_form">
-                                            @csrf
+                            <form method="post" class="member_form">
+                                @csrf
+                                <table id="member_table" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
                                             <th>
                                                 <input type="checkbox" name="select_all_member" id="select_all_member">
                                             </th>
-                                        </form>
-                                        <th>#</th>
-                                        <th>Member Code</th>
-                                        <th>Member Name</th>
-                                        <th>Address</th>
-                                        <th>Phone</th>
-                                        <th>
-                                            <i class="nav-icon fas fa-cog"></i>
-                                        </th>
-                                    </tr>
-                                </thead>
-                            </table>
+                                            <th>#</th>
+                                            <th>Member Code</th>
+                                            <th>Member Name</th>
+                                            <th>Address</th>
+                                            <th>Phone</th>
+                                            <th>
+                                                <i class="nav-icon fas fa-cog"></i>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -102,12 +102,10 @@
 
             // Validator and Form Submit Logic
             $("#modalForm form").on("submit", function(e) {
-                e.preventDefault(); // Prevent default form submission
+                e.preventDefault();
 
-                // Send form data via AJAX
                 $.post($(this).attr("action"), $(this).serialize())
                     .done(function(response) {
-                        // Success - reload table
                         member_table.ajax.reload();
                         $("#modalForm").modal("hide");
                     })
@@ -118,7 +116,7 @@
 
             // Select All Member
             $("[name=select_all_member]").on("click", function() {
-                $("input[name='member_id[]']").prop("checked", this.checked);
+                $(':checkbox').prop('checked', this.checked);
             });
 
             // Function: Add Member
@@ -168,63 +166,39 @@
                 }
             }
 
+            // Function: Delete Member Selected
             window.deleteMemberSelected = function(url) {
-                var selected_members = $("input[name='member_id[]']:checked").map(function() {
-                    return this.value;
-                }).get();
+                var selected_members = $('input:checked').length;
 
-                if (selected_members.length > 0) {
+                if (selected_members > 0) {
                     if (confirm("Are you sure to delete the selected data?")) {
-                        $.post(url, {
-                                "_token": $("meta[name='csrf-token']").attr("content"),
-                                "member_id": selected_members
-                            })
-                            .done(function(response) {
+                        $.post(url, $('.member_form').serialize())
+                            .done((response) => {
                                 member_table.ajax.reload();
                             })
-                            .fail(function(errors) {
-                                alert("Failed to delete selected data!");
+                            .fail((errors) => {
+                                alert('Failed to delete data!');
+                                return;
                             });
                     }
                 } else {
                     alert("Choose data that will be deleted!");
+                    return;
                 }
             }
 
+            // Function: Print ID Card Member
             window.printMember = function(url) {
-                var selected_members = $("input[name='member_id[]']:checked").map(function() {
-                    return this.value;
-                }).get();
+                var selected_members = $('input:checked').length;
 
-                if (selected_members.length < 1) {
+                if (selected_members > 0) {
+                    $('.member_form')
+                        .attr('target', '_blank')
+                        .attr('action', url)
+                        .submit();
+                } else {
                     alert("Choose data that will be printed!");
                     return;
-                } else {
-                    // Create a form with selected member IDs and target="_blank"
-                    var form = $("<form>", {
-                        action: url,
-                        method: "POST",
-                        target: "_blank"
-                    });
-
-                    // Add CSRF token
-                    form.append($("<input>", {
-                        type: "hidden",
-                        name: "_token",
-                        value: $("meta[name='csrf-token']").attr("content")
-                    }));
-
-                    // Add the selected member IDs
-                    form.append($("<input>", {
-                        type: "hidden",
-                        name: "member_id[]",
-                        value: selected_members.join(',')
-                    }));
-
-                    // Append the form to body and submit it
-                    $("body").append(form);
-                    form.submit();
-                    form.remove();
                 }
             }
         });
