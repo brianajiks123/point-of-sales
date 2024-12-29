@@ -27,19 +27,15 @@
             display: flex;
             flex-wrap: nowrap;
             gap: 20px;
-            /* Adds space between cards */
             justify-content: flex-start;
-            /* Align items from left to right */
             overflow-x: auto;
-            /* Allow horizontal scrolling if necessary */
         }
 
         /* Member card styling */
         .card {
             width: 50%;
-            /* Adjust width as per design requirements */
             height: 54mm;
-            background-image: url('{{ public_path('admin/images/member.png') }}');
+            background-color: #070606;
             background-size: cover;
             background-position: center;
             border-radius: 8px;
@@ -53,10 +49,13 @@
         /* Logo styling */
         .logo {
             position: absolute;
-            right: 5mm;
             top: 5mm;
-            text-align: center;
-            color: #fff;
+            left: 5mm;
+            right: 5mm;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: calc(100% - 10mm);
         }
 
         .logo img {
@@ -67,7 +66,8 @@
         .logo p {
             font-size: 14pt;
             font-weight: bold;
-            margin-top: 5px;
+            color: #fff;
+            text-align: right;
         }
 
         /* Name and Phone styling */
@@ -108,26 +108,24 @@
 <body>
     <section>
         <div class="container">
-            @foreach ($data_member as $data)
-                @foreach ($data as $member)
-                    <div class="card">
-                        <!-- Logo Section -->
-                        <div class="logo">
-                            <img src="{{ public_path('admin/images/logo.png') }}" alt="Logo">
-                            <p>{{ config('app.name') }}</p>
-                        </div>
-
-                        <!-- Member Name and Phone Section -->
-                        <div class="name">{{ $member->name }}</div>
-                        <div class="phone">{{ $member->phone }}</div>
-
-                        <!-- QR Code Section -->
-                        <div class="barcode">
-                            <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG($member->member_code, 'QRCODE') }}"
-                                alt="QRCode">
-                        </div>
+            @foreach ($data_member as $member)
+                <div class="card">
+                    <!-- Logo Section -->
+                    <div class="logo">
+                        <img src="{{ public_path('admin/images/logo.png') }}" alt="Logo">
+                        <p>{{ config('app.name') }}</p>
                     </div>
-                @endforeach
+
+                    <!-- Member Name and Phone Section -->
+                    <div class="name">{{ $member->name }}</div>
+                    <div class="phone">{{ $member->phone }}</div>
+
+                    <!-- QR Code Section -->
+                    <div class="barcode">
+                        <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG($member->member_code, 'QRCODE') }}"
+                            alt="QRCode">
+                    </div>
+                </div>
             @endforeach
         </div>
     </section>

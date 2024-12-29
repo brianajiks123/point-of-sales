@@ -43,8 +43,8 @@ class ProductController extends Controller
             ->addColumn("action", function ($product) {
                 return "
                 <div class='btn-group'>
-                    <button class='btn btn-xs btn-warning mr-3' onclick='editProduct(`" . route("product.update", $product->id) . "`)'><i class='fa fa-pencil-alt'></i></button>
-                    <button class='btn btn-xs btn-danger' onclick='deleteProduct(`" . route("product.destroy", $product->id) . "`)'><i class='fa fa-trash-alt'></i></button>
+                    <button type='button' class='btn btn-xs btn-warning mr-3' onclick='editProduct(`" . route("product.update", $product->id) . "`)'><i class='fa fa-pencil-alt'></i></button>
+                    <button type='button' class='btn btn-xs btn-danger' onclick='deleteProduct(`" . route("product.destroy", $product->id) . "`)'><i class='fa fa-trash-alt'></i></button>
                 </div>
                 ";
             })
@@ -120,9 +120,9 @@ class ProductController extends Controller
     public function printBarcode(Request $request)
     {
         if ($request->has('product_id') && is_array($request->product_id)) {
-            $data_product = collect(array());
-            $data_product_id = explode(",", $request->product_id[0]);
-            
+            $data_product = array();
+            $data_product_id = $request->product_id;
+
             foreach ($data_product_id as $product_id) {
                 $product = Product::findOrFail($product_id);
                 $data_product[] = $product;

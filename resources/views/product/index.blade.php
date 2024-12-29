@@ -32,30 +32,30 @@
                         <!-- /.card-header -->
 
                         <div class="card-body">
-                            <table id="product_table" class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <form class="product_form" method="post">
-                                            @csrf
+                            <form class="product_form" method="post">
+                                @csrf
+                                <table id="product_table" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
                                             <th>
                                                 <input type="checkbox" name="select_all_product" id="select_all_product">
                                             </th>
-                                        </form>
-                                        <th>#</th>
-                                        <th>Product Code</th>
-                                        <th>Product Name</th>
-                                        <th>Category</th>
-                                        <th>Brand</th>
-                                        <th>Purchase Price (Rp)</th>
-                                        <th>Sell Price (Rp)</th>
-                                        <th>Discount</th>
-                                        <th>Stock</th>
-                                        <th>
-                                            <i class="nav-icon fas fa-cog"></i>
-                                        </th>
-                                    </tr>
-                                </thead>
-                            </table>
+                                            <th>#</th>
+                                            <th>Product Code</th>
+                                            <th>Product Name</th>
+                                            <th>Category</th>
+                                            <th>Brand</th>
+                                            <th>Purchase Price (Rp)</th>
+                                            <th>Sell Price (Rp)</th>
+                                            <th>Discount</th>
+                                            <th>Stock</th>
+                                            <th>
+                                                <i class="nav-icon fas fa-cog"></i>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </form>
                         </div>
                         <!-- ./card-body -->
                     </div>
@@ -76,56 +76,55 @@
         let product_table;
 
         $(function() {
-            product_table = $("#product_table")
-                .DataTable({
-                    responsive: true,
-                    lengthChange: false,
-                    autoWidth: false,
-                    processing: true,
-                    ajax: {
-                        url: "{{ route('product.data') }}",
+            product_table = $("#product_table").DataTable({
+                responsive: true,
+                lengthChange: false,
+                autoWidth: false,
+                processing: true,
+                ajax: {
+                    url: "{{ route('product.data') }}",
+                },
+                columns: [{
+                        data: "select_all_product",
+                        searchable: false,
+                        sortable: false
                     },
-                    columns: [{
-                            data: "select_all_product",
-                            searchable: false,
-                            sortable: false
-                        },
-                        {
-                            data: "DT_RowIndex",
-                            searchable: false,
-                            sortable: false
-                        },
-                        {
-                            data: "code"
-                        },
-                        {
-                            data: "name"
-                        },
-                        {
-                            data: "category"
-                        },
-                        {
-                            data: "brand"
-                        },
-                        {
-                            data: "price"
-                        },
-                        {
-                            data: "sell_price"
-                        },
-                        {
-                            data: "discount"
-                        },
-                        {
-                            data: "stock"
-                        },
-                        {
-                            data: "action",
-                            searchable: false,
-                            sortable: false
-                        },
-                    ]
-                });
+                    {
+                        data: "DT_RowIndex",
+                        searchable: false,
+                        sortable: false
+                    },
+                    {
+                        data: "code"
+                    },
+                    {
+                        data: "name"
+                    },
+                    {
+                        data: "category"
+                    },
+                    {
+                        data: "brand"
+                    },
+                    {
+                        data: "price"
+                    },
+                    {
+                        data: "sell_price"
+                    },
+                    {
+                        data: "discount"
+                    },
+                    {
+                        data: "stock"
+                    },
+                    {
+                        data: "action",
+                        searchable: false,
+                        sortable: false
+                    },
+                ]
+            });
 
             // Validator
             $("#modalForm").validator().on("submit", function(e) {
@@ -148,7 +147,7 @@
 
             // Select All Product
             $("[name=select_all_product]").on("click", function() {
-                $("input[name='product_id[]']").prop("checked", this.checked);
+                $(':checkbox').prop('checked', this.checked);
             });
 
             // Function: Add Product
@@ -213,63 +212,37 @@
 
             // Function: Delete Product Selected
             window.deleteProductSelected = function(url) {
-                var selected_products = $("input[name='product_id[]']:checked").map(function() {
-                    return this.value;
-                }).get();
+                var selected_products = $('input:checked').length;
 
-                if (selected_products.length > 0) {
+                if (selected_products > 0) {
                     if (confirm("Are you sure to delete the selected data?")) {
-                        $.post(url, {
-                                "_token": $("meta[name='csrf-token']").attr("content"),
-                                "product_id": selected_products
-                            })
-                            .done(function(response) {
+                        $.post(url, $('.product_form').serialize())
+                            .done((response) => {
                                 product_table.ajax.reload();
                             })
-                            .fail(function(errors) {
-                                alert("Failed to delete selected data!");
+                            .fail((errors) => {
+                                alert('Failed to delete data!');
+                                return;
                             });
                     }
                 } else {
                     alert("Choose data that will be deleted!");
+                    return;
                 }
             }
 
             // Function: Print Barcode
             window.printBarcode = function(url) {
-                var selected_products = $("input[name='product_id[]']:checked").map(function() {
-                    return this.value;
-                }).get();
+                var selected_products = $('input:checked').length;
 
-                if (selected_products.length < 1) {
+                if (selected_products > 0) {
+                    $('.product_form')
+                        .attr('target', '_blank')
+                        .attr('action', url)
+                        .submit();
+                } else {
                     alert("Choose data that will be printed!");
                     return;
-                } else {
-                    // Create a form with selected product IDs and target="_blank"
-                    var form = $("<form>", {
-                        action: url,
-                        method: "POST",
-                        target: "_blank"
-                    });
-
-                    // Add CSRF token
-                    form.append($("<input>", {
-                        type: "hidden",
-                        name: "_token",
-                        value: $("meta[name='csrf-token']").attr("content")
-                    }));
-
-                    // Add the selected product IDs
-                    form.append($("<input>", {
-                        type: "hidden",
-                        name: "product_id[]",
-                        value: selected_products.join(',')
-                    }));
-
-                    // Append the form to body and submit it
-                    $("body").append(form);
-                    form.submit();
-                    form.remove();
                 }
             }
         });
