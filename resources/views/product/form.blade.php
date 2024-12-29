@@ -1,6 +1,6 @@
 <div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="modalFormLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <form action="" method="post">
+        <form method="post">
             @csrf
             @method('POST')
 

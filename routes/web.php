@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\MemberController;
 use Illuminate\Support\Facades\Route;
 
 // Login
@@ -13,9 +15,8 @@ Route::middleware([
     'verified',
 ])->group(function () {
     // Dashboard
-    Route::get('/dashboard', function () {
-        return view('home');
-    });
+    // Route::get('/dashboard/data', [DashboardController::class, "data"])->name("category.data");
+    Route::resource('/dashboard', DashboardController::class);
 
     // Category
     Route::get('/category/data', [CategoryController::class, "data"])->name("category.data");
@@ -26,4 +27,10 @@ Route::middleware([
     Route::resource('/product', ProductController::class);
     Route::post('/product/delete-selected', [ProductController::class, "deleteSelected"])->name("product.deleteSelected");
     Route::post('/product/print-barcode', [ProductController::class, "printBarcode"])->name("product.printBarcode");
+
+    // Member
+    Route::get('/member/data', [MemberController::class, "data"])->name("member.data");
+    Route::resource('/member', MemberController::class);
+    Route::post('/member/delete-selected', [MemberController::class, "deleteSelected"])->name("member.deleteSelected");
+    Route::post('/member/print-member', [MemberController::class, "printMember"])->name("member.printMember");
 });
