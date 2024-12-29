@@ -83,14 +83,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
 
         if ($product) {
-            $product->name = $request->name;
-            $product->category_id = $request->category_id;
-            $product->brand = $request->brand;
-            $product->price = $request->price;
-            $product->sell_price = $request->sell_price;
-            $product->discount = $request->discount;
-            $product->stock = $request->stock;
-            $product->save();
+            $product->update($request->all());
 
             return response()->json("Update product successfully.");
         }
@@ -109,30 +102,38 @@ class ProductController extends Controller
 
     public function deleteSelected(Request $request)
     {
-        foreach ($request->product_id as $product_id) {
-            $product = Product::findOrFail($product_id);
+        if ($request->has('product_id') && is_array($request->product_id)) {
+            foreach ($request->product_id as $product_id) {
+                $product = Product::findOrFail($product_id);
 
-            if ($product) {
-                $product->delete();
+                if ($product) {
+                    $product->delete();
+                }
             }
+
+            return response()->json(['message' => 'Selected products deleted successfully.']);
         }
 
-        return response()->json("Delete selected product successfully.");
+        return response()->json(['error' => 'No products selected.'], 400);
     }
 
     public function printBarcode(Request $request)
     {
-        foreach ($request->product_id as $product_id) {
-            $product = Product::findOrFail($product_id);
-
-            if ($product) {
+        if ($request->has('product_id') && is_array($request->product_id)) {
+            $data_product = collect(array());
+            $data_product_id = explode(",", $request->product_id[0]);
+            
+            foreach ($data_product_id as $product_id) {
+                $product = Product::findOrFail($product_id);
                 $data_product[] = $product;
             }
+
+            $pdf = Pdf::loadView('product.barcode', compact('data_product'));
+            $pdf->setPaper("a4", "portrait");
+
+            return $pdf->stream('product.pdf');
         }
 
-        $pdf = Pdf::loadView('product.barcode', compact("data_product"));
-        $pdf->setPaper("a4", "potrait");
-
-        return $pdf->stream("product.pdf");
+        return response()->json(['error' => 'No products selected.'], 400);
     }
 }

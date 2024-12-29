@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
 @section('title')
-    <h3 class="mb-0">List Product</h3>
+    <h3 class="mb-0">List {{ $menu }}</h3>
 @endsection
 
 @section('breadcumb')
     @parent
-    <li class="breadcrumb-item active" aria-current="page">Product</li>
+    <li class="breadcrumb-item active" aria-current="page">{{ $menu }}</li>
 @endsection
 
 @section('content')
@@ -32,30 +32,30 @@
                         <!-- /.card-header -->
 
                         <div class="card-body">
-                            <form class="product_form" method="post">
-                                @csrf
-                                <table id="product_table" class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
+                            <table id="product_table" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <form class="product_form" method="post">
+                                            @csrf
                                             <th>
                                                 <input type="checkbox" name="select_all_product" id="select_all_product">
                                             </th>
-                                            <th>#</th>
-                                            <th>Product Code</th>
-                                            <th>Product Name</th>
-                                            <th>Category</th>
-                                            <th>Brand</th>
-                                            <th>Purchase Price (Rp)</th>
-                                            <th>Sell Price (Rp)</th>
-                                            <th>Discount</th>
-                                            <th>Stock</th>
-                                            <th>
-                                                <i class="nav-icon fas fa-cog"></i>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </form>
+                                        </form>
+                                        <th>#</th>
+                                        <th>Product Code</th>
+                                        <th>Product Name</th>
+                                        <th>Category</th>
+                                        <th>Brand</th>
+                                        <th>Purchase Price (Rp)</th>
+                                        <th>Sell Price (Rp)</th>
+                                        <th>Discount</th>
+                                        <th>Stock</th>
+                                        <th>
+                                            <i class="nav-icon fas fa-cog"></i>
+                                        </th>
+                                    </tr>
+                                </thead>
+                            </table>
                         </div>
                         <!-- ./card-body -->
                     </div>
@@ -86,7 +86,9 @@
                         url: "{{ route('product.data') }}",
                     },
                     columns: [{
-                            data: "select_all_product"
+                            data: "select_all_product",
+                            searchable: false,
+                            sortable: false
                         },
                         {
                             data: "DT_RowIndex",
@@ -146,110 +148,130 @@
 
             // Select All Product
             $("[name=select_all_product]").on("click", function() {
-                $(":checkbox").prop("checked", this.checked);
+                $("input[name='product_id[]']").prop("checked", this.checked);
             });
-        });
 
-        // Function: Add Product
-        function addProduct(url) {
-            $("#modalForm").modal("show");
-            $("#modalForm .modal-title").text("Add Product");
+            // Function: Add Product
+            window.addProduct = function(url) {
+                $("#modalForm").modal("show");
+                $("#modalForm .modal-title").text("Add Product");
 
-            $("#modalForm form")[0].reset();
-            $("#modalForm form").attr("action", url);
-            $("#modalForm [name=_method]").val("POST");
-        }
+                $("#modalForm form")[0].reset();
+                $("#modalForm form").attr("action", url);
+                $("#modalForm [name=_method]").val("POST");
+            }
 
-        // Function: Edit Product
-        function editProduct(url) {
-            $("#modalForm").modal("show");
-            $("#modalForm .modal-title").text("Edit Product");
+            // Function: Edit Product
+            window.editProduct = function(url) {
+                $("#modalForm").modal("show");
+                $("#modalForm .modal-title").text("Edit Product");
 
-            $("#modalForm form")[0].reset();
-            $("#modalForm form").attr("action", url);
-            $("#modalForm [name=_method]").val("PUT");
+                $("#modalForm form")[0].reset();
+                $("#modalForm form").attr("action", url);
+                $("#modalForm [name=_method]").val("PUT");
 
-            // Get Data
-            $.get(url)
-                .done((response) => {
-                    // Success
-                    $("#modalForm [name=name]").val(response.name);
-                    $("#modalForm [name=category_id]").val(response.category_id);
-                    $("#modalForm [name=brand]").val(response.brand);
-                    $("#modalForm [name=price]").val(response.price);
-                    $("#modalForm [name=sell_price]").val(response.sell_price);
-                    $("#modalForm [name=discount]").val(response.discount);
-                    $("#modalForm [name=stock]").val(response.stock);
-                })
-                .fail((errors) => {
-                    // Failed
-                    alert("Failed to display data!");
-
-                    return;
-                });
-        }
-
-        // Function: Delete Product
-        function deleteProduct(url) {
-            if (confirm("Are you sure delete this Product?")) {
-                // Delete Data
-                $.post(url, {
-                        "_token": $("[name=csrf-token]").attr("content"),
-                        "_method": "DELETE"
-                    })
+                // Get Data
+                $.get(url)
                     .done((response) => {
                         // Success
-                        product_table.ajax.reload();
+                        $("#modalForm [name=name]").val(response.name);
+                        $("#modalForm [name=category_id]").val(response.category_id);
+                        $("#modalForm [name=brand]").val(response.brand);
+                        $("#modalForm [name=price]").val(response.price);
+                        $("#modalForm [name=sell_price]").val(response.sell_price);
+                        $("#modalForm [name=discount]").val(response.discount);
+                        $("#modalForm [name=stock]").val(response.stock);
                     })
                     .fail((errors) => {
                         // Failed
-                        alert("Failed to delete data!");
+                        alert("Failed to display data!");
 
                         return;
                     });
             }
-        }
 
-        // Function: Delete Product Selected
-        function deleteProductSelected(url) {
-            total_selected = $("input:checked").length;
-
-            if (total_selected) {
-                if (confirm("Are you sure to delete the selected data?")) {
-                    $.post(url, $(".product_form").serialize())
+            // Function: Delete Product
+            window.deleteProduct = function(url) {
+                if (confirm("Are you sure delete this Product?")) {
+                    // Delete Data
+                    $.post(url, {
+                            "_token": $("[name=csrf-token]").attr("content"),
+                            "_method": "DELETE"
+                        })
                         .done((response) => {
                             // Success
                             product_table.ajax.reload();
                         })
                         .fail((errors) => {
                             // Failed
-                            alert("Failed to delete selected data!");
+                            alert("Failed to delete data!");
 
                             return;
                         });
                 }
-            } else {
-                alert("Choose data that will be deleted!");
-                return;
             }
-        }
 
-        // Function: Print Barcode
-        function printBarcode(url) {
-            total_selected = $("input:checked").length;
+            // Function: Delete Product Selected
+            window.deleteProductSelected = function(url) {
+                var selected_products = $("input[name='product_id[]']:checked").map(function() {
+                    return this.value;
+                }).get();
 
-            if (total_selected < 1) {
-                alert("Choose data that will be printed!");
-                return;
-            } else if (total_selected < 3) {
-                alert("Choose min. 3 data to printed!");
-                return;
-            } else {
-                $(".product_form")
-                    .attr("action", url)
-                    .attr("target", "_blank")
-                    .submit();
+                if (selected_products.length > 0) {
+                    if (confirm("Are you sure to delete the selected data?")) {
+                        $.post(url, {
+                                "_token": $("meta[name='csrf-token']").attr("content"),
+                                "product_id": selected_products
+                            })
+                            .done(function(response) {
+                                product_table.ajax.reload();
+                            })
+                            .fail(function(errors) {
+                                alert("Failed to delete selected data!");
+                            });
+                    }
+                } else {
+                    alert("Choose data that will be deleted!");
+                }
             }
-        }
+
+            // Function: Print Barcode
+            window.printBarcode = function(url) {
+                var selected_products = $("input[name='product_id[]']:checked").map(function() {
+                    return this.value;
+                }).get();
+
+                if (selected_products.length < 1) {
+                    alert("Choose data that will be printed!");
+                    return;
+                } else {
+                    // Create a form with selected product IDs and target="_blank"
+                    var form = $("<form>", {
+                        action: url,
+                        method: "POST",
+                        target: "_blank"
+                    });
+
+                    // Add CSRF token
+                    form.append($("<input>", {
+                        type: "hidden",
+                        name: "_token",
+                        value: $("meta[name='csrf-token']").attr("content")
+                    }));
+
+                    // Add the selected product IDs
+                    form.append($("<input>", {
+                        type: "hidden",
+                        name: "product_id[]",
+                        value: selected_products.join(',')
+                    }));
+
+                    // Append the form to body and submit it
+                    $("body").append(form);
+                    form.submit();
+                    form.remove();
+                }
+            }
+        });
     </script>
 @endpush

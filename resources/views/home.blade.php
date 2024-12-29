@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
 @section('title')
-    <h1 class="m-0">Dashboard</h1>
+    <h1 class="m-0">{{ $menu }}</h1>
 @endsection
 
 @section('breadcumb')
     @parent
-    <li class="breadcrumb-item active">Dashboard</li>
+    <li class="breadcrumb-item active">{{ $menu }}</li>
 @endsection
 
 @section('content')
