@@ -18,18 +18,20 @@
                 <div class="col-md-12">
                     <div class="card mb-4">
                         <div class="card-header">
-                            <button class="btn btn-primary xs" onclick="addCategory('{{ route('category.store') }}')">
+                            <button class="btn btn-primary xs" onclick="addExpense('{{ route('expense.store') }}')">
                                 <i class="nav-icon fas fa-plus"></i> Add
                             </button>
                         </div>
                         <!-- /.card-header -->
 
                         <div class="card-body">
-                            <table id="category_table" class="table table-bordered table-striped">
+                            <table id="expense_table" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Category</th>
+                                        <th>Date</th>
+                                        <th>Description</th>
+                                        <th>Amount (Rp)</th>
                                         <th>
                                             <i class="nav-icon fas fa-cog"></i>
                                         </th>
@@ -48,15 +50,15 @@
         <!--end::Container-->
     </div>
 
-    @includeIf('category.form')
+    @includeIf('expense.form')
 @endsection
 
 @push('scripts')
     <script>
-        let category_table;
+        let expense_table;
 
         $(function() {
-            category_table = $("#category_table")
+            expense_table = $("#expense_table")
                 .DataTable({
                     responsive: true,
                     lengthChange: false,
@@ -64,7 +66,7 @@
                     serverSide: true,
                     processing: true,
                     ajax: {
-                        url: "{{ route('category.data') }}",
+                        url: "{{ route('expense.data') }}",
                     },
                     columns: [{
                             data: "DT_RowIndex",
@@ -72,7 +74,13 @@
                             sortable: false
                         },
                         {
-                            data: "name"
+                            data: "created_at"
+                        },
+                        {
+                            data: "description"
+                        },
+                        {
+                            data: "amount"
                         },
                         {
                             data: "action",
@@ -90,7 +98,7 @@
                             // Success
                             $("#modalForm").modal("hide");
 
-                            category_table.ajax.reload();
+                            expense_table.ajax.reload();
                         })
                         .fail((errors) => {
                             // Failed
@@ -102,20 +110,20 @@
             });
         });
 
-        // Function: Add Category
-        function addCategory(url) {
+        // Function: Add Expense
+        function addExpense(url) {
             $("#modalForm").modal("show");
-            $("#modalForm .modal-title").text("Add Category");
+            $("#modalForm .modal-title").text("Add Expense");
 
             $("#modalForm form")[0].reset();
             $("#modalForm form").attr("action", url);
             $("#modalForm [name=_method]").val("POST");
         }
 
-        // Function: Edit Category
-        function editCategory(url) {
+        // Function: Edit Expense
+        function editExpense(url) {
             $("#modalForm").modal("show");
-            $("#modalForm .modal-title").text("Edit Category");
+            $("#modalForm .modal-title").text("Edit Expense");
 
             $("#modalForm form")[0].reset();
             $("#modalForm form").attr("action", url);
@@ -125,7 +133,8 @@
             $.get(url)
                 .done((response) => {
                     // Success
-                    $("#modalForm [name=name]").val(response.name);
+                    $("#modalForm [name=description]").val(response.description);
+                    $("#modalForm [name=amount]").val(response.amount);
                 })
                 .fail((errors) => {
                     // Failed
@@ -135,9 +144,9 @@
                 });
         }
 
-        // Function: Delete Category
-        function deleteCategory(url) {
-            if (confirm("Are you sure delete this category?")) {
+        // Function: Delete Expense
+        function deleteExpense(url) {
+            if (confirm("Are you sure delete this expense?")) {
                 // Delete Data
                 $.post(url, {
                         "_token": $("[name=csrf-token]").attr("content"),
@@ -145,7 +154,7 @@
                     })
                     .done((response) => {
                         // Success
-                        category_table.ajax.reload();
+                        expense_table.ajax.reload();
                     })
                     .fail((errors) => {
                         // Failed

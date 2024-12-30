@@ -18,18 +18,20 @@
                 <div class="col-md-12">
                     <div class="card mb-4">
                         <div class="card-header">
-                            <button class="btn btn-primary xs" onclick="addCategory('{{ route('category.store') }}')">
+                            <button class="btn btn-primary xs" onclick="addSupplier('{{ route('supplier.store') }}')">
                                 <i class="nav-icon fas fa-plus"></i> Add
                             </button>
                         </div>
                         <!-- /.card-header -->
 
                         <div class="card-body">
-                            <table id="category_table" class="table table-bordered table-striped">
+                            <table id="supplier_table" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Category</th>
+                                        <th>Name</th>
+                                        <th>Phone</th>
+                                        <th>Address</th>
                                         <th>
                                             <i class="nav-icon fas fa-cog"></i>
                                         </th>
@@ -48,15 +50,15 @@
         <!--end::Container-->
     </div>
 
-    @includeIf('category.form')
+    @includeIf('supplier.form')
 @endsection
 
 @push('scripts')
     <script>
-        let category_table;
+        let supplier_table;
 
         $(function() {
-            category_table = $("#category_table")
+            supplier_table = $("#supplier_table")
                 .DataTable({
                     responsive: true,
                     lengthChange: false,
@@ -64,7 +66,7 @@
                     serverSide: true,
                     processing: true,
                     ajax: {
-                        url: "{{ route('category.data') }}",
+                        url: "{{ route('supplier.data') }}",
                     },
                     columns: [{
                             data: "DT_RowIndex",
@@ -73,6 +75,12 @@
                         },
                         {
                             data: "name"
+                        },
+                        {
+                            data: "phone"
+                        },
+                        {
+                            data: "address"
                         },
                         {
                             data: "action",
@@ -90,7 +98,7 @@
                             // Success
                             $("#modalForm").modal("hide");
 
-                            category_table.ajax.reload();
+                            supplier_table.ajax.reload();
                         })
                         .fail((errors) => {
                             // Failed
@@ -102,20 +110,20 @@
             });
         });
 
-        // Function: Add Category
-        function addCategory(url) {
+        // Function: Add Supplier
+        function addSupplier(url) {
             $("#modalForm").modal("show");
-            $("#modalForm .modal-title").text("Add Category");
+            $("#modalForm .modal-title").text("Add Supplier");
 
             $("#modalForm form")[0].reset();
             $("#modalForm form").attr("action", url);
             $("#modalForm [name=_method]").val("POST");
         }
 
-        // Function: Edit Category
-        function editCategory(url) {
+        // Function: Edit Supplier
+        function editSupplier(url) {
             $("#modalForm").modal("show");
-            $("#modalForm .modal-title").text("Edit Category");
+            $("#modalForm .modal-title").text("Edit Supplier");
 
             $("#modalForm form")[0].reset();
             $("#modalForm form").attr("action", url);
@@ -126,6 +134,8 @@
                 .done((response) => {
                     // Success
                     $("#modalForm [name=name]").val(response.name);
+                    $("#modalForm [name=phone]").val(response.phone);
+                    $("#modalForm [name=address]").val(response.address);
                 })
                 .fail((errors) => {
                     // Failed
@@ -135,9 +145,9 @@
                 });
         }
 
-        // Function: Delete Category
-        function deleteCategory(url) {
-            if (confirm("Are you sure delete this category?")) {
+        // Function: Delete Supplier
+        function deleteSupplier(url) {
+            if (confirm("Are you sure delete this supplier?")) {
                 // Delete Data
                 $.post(url, {
                         "_token": $("[name=csrf-token]").attr("content"),
@@ -145,7 +155,7 @@
                     })
                     .done((response) => {
                         // Success
-                        category_table.ajax.reload();
+                        supplier_table.ajax.reload();
                     })
                     .fail((errors) => {
                         // Failed

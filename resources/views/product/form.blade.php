@@ -86,7 +86,7 @@
                         <input type="number" name="stock" id="inputErrorStock"
                             class="form-control @error('stock') is-invalid @enderror" placeholder="Enter Stock"
                             min="1" value="1" required>
-                        <caption class="ml-3">Min. 1</caption>
+                        <small class="ml-1">Min. 1</small>
                     </div>
                 </div>
                 <div class="modal-footer">

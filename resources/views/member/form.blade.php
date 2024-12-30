@@ -38,7 +38,7 @@
                                 <i class="fas fa-times-circle"></i> {{ $message }}
                             </label>
                         @enderror
-                        <textarea name="address" id="address" class="form-control @error('address') is-invalid @enderror" cols="30"
+                        <textarea name="address" id="inputErrorAddress" class="form-control @error('address') is-invalid @enderror" cols="30"
                             rows="10" placeholder="Enter Address" required></textarea>
                     </div>
                 </div>
