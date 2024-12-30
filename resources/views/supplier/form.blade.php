@@ -22,6 +22,25 @@
                             class="form-control @error('name') is-invalid @enderror" placeholder="Enter Category Name"
                             required>
                     </div>
+                    <div class="form-group row">
+                        @error('phone')
+                            <label class="col-form-label text-danger" for="inputErrorPhone" style="font-size: 14px;">
+                                <i class="fas fa-times-circle"></i> {{ $message }}
+                            </label>
+                        @enderror
+                        <input type="number" name="phone" id="inputErrorPhone"
+                            class="form-control @error('phone') is-invalid @enderror" placeholder="Enter Phone"
+                            required>
+                    </div>
+                    <div class="form-group row">
+                        @error('address')
+                            <label class="col-form-label text-danger" for="inputErrorAddress" style="font-size: 14px;">
+                                <i class="fas fa-times-circle"></i> {{ $message }}
+                            </label>
+                        @enderror
+                        <textarea name="address" id="address" class="form-control @error('address') is-invalid @enderror" cols="30"
+                            rows="10" placeholder="Enter Address" required></textarea>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal"><i

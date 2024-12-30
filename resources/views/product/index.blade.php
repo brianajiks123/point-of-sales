@@ -80,6 +80,7 @@
                 responsive: true,
                 lengthChange: false,
                 autoWidth: false,
+                serverSide: true,
                 processing: true,
                 ajax: {
                     url: "{{ route('product.data') }}",
