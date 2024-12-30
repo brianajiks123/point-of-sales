@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\ExpenseController;
 use Illuminate\Support\Facades\Route;
 
 // Login
@@ -38,6 +39,8 @@ Route::middleware([
     // Supplier
     Route::get('/supplier/data', [SupplierController::class, "data"])->name("supplier.data");
     Route::resource('/supplier', SupplierController::class);
-    Route::post('/supplier/delete-selected', [SupplierController::class, "deleteSelected"])->name("supplier.deleteSelected");
-    Route::post('/supplier/print-supplier', [SupplierController::class, "printSupplier"])->name("member.printSupplier");
+    
+    // Expense
+    Route::get('/expense/data', [ExpenseController::class, "data"])->name("expense.data");
+    Route::resource('/expense', ExpenseController::class);
 });
