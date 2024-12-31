@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Purchase;
 use App\Models\PurchaseDetail;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
@@ -16,12 +17,13 @@ class PurchaseDetailController extends Controller
         $product = Product::get();
         $supplier = Supplier::findOrFail(session("supplier_id"));
         $purchase_id = session("purchase_id");
+        $discount = Purchase::findOrFail($purchase_id)->discount ?? 0;
 
         if (!$supplier) {
             abort(404);
         }
 
-        return view("purchase_detail.index", compact("menu", "product", "supplier", "purchase_id"));
+        return view("purchase_detail.index", compact("menu", "product", "supplier", "purchase_id", "discount"));
     }
 
     public function data(string $id)
