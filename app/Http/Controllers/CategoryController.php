@@ -16,10 +16,10 @@ class CategoryController extends Controller
 
     public function data()
     {
-        $category = Category::latest();
+        $categories = Category::latest();
 
         return datatables()
-            ->of($category)
+            ->of($categories)
             ->addIndexColumn()
             ->addColumn("action", function ($category) {
                 return "

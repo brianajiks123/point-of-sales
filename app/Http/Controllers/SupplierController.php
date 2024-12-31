@@ -16,10 +16,10 @@ class SupplierController extends Controller
 
     public function data()
     {
-        $supplier = Supplier::latest();
+        $suppliers = Supplier::latest();
 
         return datatables()
-            ->of($supplier)
+            ->of($suppliers)
             ->addIndexColumn()
             ->addColumn("action", function ($supplier) {
                 return "

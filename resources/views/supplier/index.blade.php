@@ -19,7 +19,7 @@
                     <div class="card mb-4">
                         <div class="card-header">
                             <button class="btn btn-primary xs" onclick="addSupplier('{{ route('supplier.store') }}')">
-                                <i class="nav-icon fas fa-plus"></i> Add
+                                <i class="fas fa-plus"></i> Add
                             </button>
                         </div>
                         <!-- /.card-header -->
@@ -33,7 +33,7 @@
                                         <th>Phone</th>
                                         <th>Address</th>
                                         <th>
-                                            <i class="nav-icon fas fa-cog"></i>
+                                            <i class="fas fa-cog"></i>
                                         </th>
                                     </tr>
                                 </thead>
@@ -131,13 +131,13 @@
 
             // Get Data
             $.get(url)
-                .done((response) => {
+                .done(response => {
                     // Success
                     $("#modalForm [name=name]").val(response.name);
                     $("#modalForm [name=phone]").val(response.phone);
                     $("#modalForm [name=address]").val(response.address);
                 })
-                .fail((errors) => {
+                .fail(errors => {
                     // Failed
                     alert("Failed to display data!");
 
@@ -153,11 +153,11 @@
                         "_token": $("[name=csrf-token]").attr("content"),
                         "_method": "DELETE"
                     })
-                    .done((response) => {
+                    .done(response => {
                         // Success
                         supplier_table.ajax.reload();
                     })
-                    .fail((errors) => {
+                    .fail(errors => {
                         // Failed
                         alert("Failed to delete data!");
 

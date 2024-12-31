@@ -19,14 +19,14 @@
                     <div class="card mb-4">
                         <div class="card-header">
                             <button class="btn btn-primary xs" onclick="addProduct('{{ route('product.store') }}')">
-                                <i class="nav-icon fas fa-plus"></i> Add
+                                <i class="fas fa-plus"></i> Add
                             </button>
                             <button class="btn btn-danger xs"
                                 onclick="deleteProductSelected('{{ route('product.deleteSelected') }}')">
-                                <i class="nav-icon fas fa-trash"></i> Delete
+                                <i class="fas fa-trash"></i> Delete
                             </button>
                             <button class="btn btn-info xs" onclick="printBarcode('{{ route('product.printBarcode') }}')">
-                                <i class="nav-icon fas fa-barcode"></i> Print Barcode
+                                <i class="fas fa-barcode"></i> Print Barcode
                             </button>
                         </div>
                         <!-- /.card-header -->
@@ -50,7 +50,7 @@
                                             <th>Discount</th>
                                             <th>Stock</th>
                                             <th>
-                                                <i class="nav-icon fas fa-cog"></i>
+                                                <i class="fas fa-cog"></i>
                                             </th>
                                         </tr>
                                     </thead>
