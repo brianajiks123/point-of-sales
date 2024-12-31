@@ -24,12 +24,12 @@
                     </div>
                     <div class="form-group row">
                         @error('category')
-                            <label class="col-form-label text-danger" for="inputErrorNameCategoryId"
+                            <label class="col-form-label text-danger" for="inputErrorCategoryId"
                                 style="font-size: 14px;">
                                 <i class="fas fa-times-circle"></i> {{ $message }}
                             </label>
                         @enderror
-                        <select name="category_id" id="inputErrorNameCategoryId" class="form-control" required>
+                        <select name="category_id" id="inputErrorCategoryId" class="form-control" required>
                             <option value="">-- Choose Category --</option>
 
                             @foreach ($categories as $key => $category)

@@ -50,7 +50,7 @@ php artisan serve
 ## Acknowledgements
 
  - [Laravel](https://laravel.com/docs/11.x)
- - [AdminLTE v4](https://github.com/ColorlibHQ/AdminLTE)
+ - [AdminLTE v3](https://github.com/ColorlibHQ/AdminLTE)
  - [YouTube](https://www.youtube.com/@W2Learn)
 
 

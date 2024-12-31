@@ -13,4 +13,10 @@ class Purchase extends Model
         'discount',
         'pay',
     ];
+
+    // Relation
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
+    }
 }

@@ -17,14 +17,14 @@
                     <div class="card mb-4">
                         <div class="card-header">
                             <button class="btn btn-primary xs" onclick="addMember('{{ route('member.store') }}')">
-                                <i class="nav-icon fas fa-plus"></i> Add
+                                <i class="fas fa-plus"></i> Add
                             </button>
                             <button class="btn btn-danger xs"
                                 onclick="deleteMemberSelected('{{ route('member.deleteSelected') }}')">
-                                <i class="nav-icon fas fa-trash"></i> Delete
+                                <i class="fas fa-trash"></i> Delete
                             </button>
                             <button class="btn btn-info xs" onclick="printMember('{{ route('member.printMember') }}')">
-                                <i class="nav-icon fas fa-id-card"></i> Print Member
+                                <i class="fas fa-id-card"></i> Print Member
                             </button>
                         </div>
                         <div class="card-body">
@@ -42,7 +42,7 @@
                                             <th>Address</th>
                                             <th>Phone</th>
                                             <th>
-                                                <i class="nav-icon fas fa-cog"></i>
+                                                <i class="fas fa-cog"></i>
                                             </th>
                                         </tr>
                                     </thead>

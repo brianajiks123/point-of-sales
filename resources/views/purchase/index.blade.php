@@ -18,20 +18,28 @@
                 <div class="col-md-12">
                     <div class="card mb-4">
                         <div class="card-header">
-                            <button class="btn btn-primary xs" onclick="addExpense('{{ route('expense.store') }}')">
+                            <button class="btn btn-primary xs" onclick="addPurchase('{{ route('purchase.store') }}')">
                                 <i class="fas fa-plus"></i> Add
                             </button>
+                            @empty(!session('purchase_id'))
+                                <a href="{{ route('purchase_detail.index') }}" class="btn btn-info xs">
+                                    <i class="fas fa-info"></i> Active Transaction
+                                </a>
+                            @endempty
                         </div>
                         <!-- /.card-header -->
 
                         <div class="card-body">
-                            <table id="expense_table" class="table table-bordered table-striped">
+                            <table id="purchase_table" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>#</th>
                                         <th>Date</th>
-                                        <th>Description</th>
-                                        <th>Amount (Rp)</th>
+                                        <th>Supplier</th>
+                                        <th>Total Item</th>
+                                        <th>Total Price (Rp)</th>
+                                        <th>Dicount</th>
+                                        <th>Pay (Rp)</th>
                                         <th>
                                             <i class="fas fa-cog"></i>
                                         </th>
@@ -50,15 +58,16 @@
         <!--end::Container-->
     </div>
 
-    @includeIf('expense.form')
+    @includeIf('purchase.supplier')
+    @includeIf('purchase.detail')
 @endsection
 
 @push('scripts')
     <script>
-        let expense_table;
+        let purchase_table;
 
         $(function() {
-            expense_table = $("#expense_table")
+            purchase_table = $("#purchase_table")
                 .DataTable({
                     responsive: true,
                     lengthChange: false,
@@ -66,7 +75,7 @@
                     serverSide: true,
                     processing: true,
                     ajax: {
-                        url: "{{ route('expense.data') }}",
+                        url: "{{ route('purchase.data') }}",
                     },
                     columns: [{
                             data: "DT_RowIndex",
@@ -77,10 +86,19 @@
                             data: "created_at"
                         },
                         {
-                            data: "description"
+                            data: "supplier"
                         },
                         {
-                            data: "amount"
+                            data: "total_item"
+                        },
+                        {
+                            data: "total_price"
+                        },
+                        {
+                            data: "discount"
+                        },
+                        {
+                            data: "pay"
                         },
                         {
                             data: "action",
@@ -89,64 +107,24 @@
                         }
                     ]
                 });
-
-            // Validator
-            $("#modalForm").validator().on("submit", function(e) {
-                if (!e.preventDefault()) {
-                    $.post($("#modalForm form").attr("action"), $("#modalForm form").serialize())
-                        .done((response) => {
-                            // Success
-                            $("#modalForm").modal("hide");
-
-                            expense_table.ajax.reload();
-                        })
-                        .fail((errors) => {
-                            // Failed
-                            alert("Failed to save data!");
-
-                            return;
-                        });
-                }
-            });
         });
 
-        // Function: Add Expense
-        function addExpense(url) {
-            $("#modalForm").modal("show");
-            $("#modalForm .modal-title").text("Add Expense");
-
-            $("#modalForm form")[0].reset();
-            $("#modalForm form").attr("action", url);
-            $("#modalForm [name=_method]").val("POST");
+        // Function: Add Purchase
+        function addPurchase() {
+            $("#modalSupplier").modal("show");
         }
 
-        // Function: Edit Expense
-        function editExpense(url) {
-            $("#modalForm").modal("show");
-            $("#modalForm .modal-title").text("Edit Expense");
+        // Function: Show Purchase
+        function showPurchase(url) {
+            $("#modalDetail").modal("show");
 
-            $("#modalForm form")[0].reset();
-            $("#modalForm form").attr("action", url);
-            $("#modalForm [name=_method]").val("PUT");
-
-            // Get Data
-            $.get(url)
-                .done(response => {
-                    // Success
-                    $("#modalForm [name=description]").val(response.description);
-                    $("#modalForm [name=amount]").val(response.amount);
-                })
-                .fail(errors => {
-                    // Failed
-                    alert("Failed to display data!");
-
-                    return;
-                });
+            purchase_detail_table.ajax.url(url);
+            purchase_detail_table.ajax.reload();
         }
 
-        // Function: Delete Expense
-        function deleteExpense(url) {
-            if (confirm("Are you sure delete this expense?")) {
+        // Function: Delete Purchase
+        function deletePurchase(url) {
+            if (confirm("Are you sure delete this purchase?")) {
                 // Delete Data
                 $.post(url, {
                         "_token": $("[name=csrf-token]").attr("content"),
@@ -154,7 +132,7 @@
                     })
                     .done(response => {
                         // Success
-                        expense_table.ajax.reload();
+                        purchase_table.ajax.reload();
                     })
                     .fail(errors => {
                         // Failed

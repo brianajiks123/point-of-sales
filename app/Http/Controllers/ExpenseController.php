@@ -16,10 +16,10 @@ class ExpenseController extends Controller
 
     public function data()
     {
-        $expense = Expense::latest();
+        $expenses = Expense::latest();
 
         return datatables()
-            ->of($expense)
+            ->of($expenses)
             ->addIndexColumn()
             ->addColumn("created_at", function ($expense) {
                 return indonesia_date($expense->created_at, false);
