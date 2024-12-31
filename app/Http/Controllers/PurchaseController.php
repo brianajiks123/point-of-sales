@@ -96,8 +96,8 @@ class PurchaseController extends Controller
                 }
             }
 
-            session()->forget('purchase_id');
-            session()->forget('supplier_id');
+            // session()->forget('purchase_id');
+            // session()->forget('supplier_id');
 
             return redirect()->route("purchase.index");
         }

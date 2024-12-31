@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Member;
+use App\Models\Setting;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
@@ -112,7 +113,9 @@ class MemberController extends Controller
                 $data_member[] = $member;
             }
 
-            $pdf = Pdf::loadView('member.print', compact('data_member'));
+            $setting = Setting::first();
+
+            $pdf = Pdf::loadView('member.print', compact('data_member', "setting"));
             $pdf->setPaper(array(0, 0, 566.93, 850.39), "portrait");
 
             return $pdf->stream('member.pdf');

@@ -38,7 +38,7 @@
                                         <th>Supplier</th>
                                         <th>Total Item</th>
                                         <th>Total Price (Rp)</th>
-                                        <th>Dicount</th>
+                                        <th>Dicount (%)</th>
                                         <th>Pay (Rp)</th>
                                         <th>
                                             <i class="fas fa-cog"></i>

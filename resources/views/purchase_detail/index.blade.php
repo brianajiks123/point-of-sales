@@ -121,20 +121,20 @@
 
                                         <div class="form-group row">
                                             <label for="total_rp"class="col-lg-4 col-form-label">Total (Rp)</label>
-                                            <div class="col-lg-5">
+                                            <div class="col-lg">
                                                 <input type="text" id="total_rp" class="form-control" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="discount" class="col-lg-4 col-form-label">Discount (%)</label>
-                                            <div class="col-lg-5">
+                                            <div class="col-lg">
                                                 <input type="number" name="discount" id="discount" class="form-control"
-                                                    value="0" min="0">
+                                                    value="{{ $discount }}" min="0">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="pay_purchase" class="col-lg-4 col-form-label">Pay (Rp)</label>
-                                            <div class="col-lg-5">
+                                            <div class="col-lg">
                                                 <input type="text" id="pay_purchase" class="form-control">
                                             </div>
                                         </div>
@@ -146,6 +146,7 @@
                                 <div class="col-lg-9"></div>
                                 <div class="col-lg">
                                     <button type="submit" class="btn btn-primary" id="btn_save">Save Transaction</button>
+                                    <a href="{{ route('purchase.index') }}" class="btn btn-secondary">Back</a>
                                 </div>
                             </div>
                         </div>

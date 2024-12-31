@@ -112,8 +112,8 @@
                 <div class="card">
                     <!-- Logo Section -->
                     <div class="logo">
-                        <img src="{{ public_path('admin/images/logo.png') }}" alt="Logo">
-                        <p>{{ config('app.name') }}</p>
+                        <img src="{{ public_path($setting->path_logo) }}" alt="Logo">
+                        <p>{{ $setting->company_name }}</p>
                     </div>
 
                     <!-- Member Name and Phone Section -->
