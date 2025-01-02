@@ -2,14 +2,15 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\MemberController;
-use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\MemberController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\PurchaseDetailController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SaleDetailController;
+use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Route;
 
 // Login
@@ -62,7 +63,7 @@ Route::middleware([
     Route::get('/transaction/new', [SaleController::class, "create"])->name("transaction.new");
     Route::get('/sale/data', [SaleController::class, "data"])->name("sale.data");
     Route::resource('/sale', SaleController::class)->except("edit", "update");
-    
+
     // Transaction
     Route::get('/transaction/{id}/data', [SaleDetailController::class, "data"])->name("transaction.data");
     Route::get('/transaction/load-form/{discount}/{total}/{accepted}', [SaleDetailController::class, "loadForm"])->name("transaction.loadForm");
@@ -70,4 +71,9 @@ Route::middleware([
     Route::get('/transaction/finish', [SaleController::class, "finish"])->name("transaction.finish");
     Route::get('/transaction/small-note', [SaleController::class, "smallNote"])->name("transaction.small_note");
     Route::get('/transaction/big-note', [SaleController::class, "bigNote"])->name("transaction.big_note");
+
+    // Report
+    Route::get('/report/data/{first_date}/{last_date}', [ReportController::class, "data"])->name("report.data");
+    Route::resource('/report', ReportController::class)->except("create", "store", "edit", "update", "destroy");
+    Route::get('/report/pdf/{first_date}/{last_date}', [ReportController::class, "exportPdf"])->name("report.exportPdf");
 });

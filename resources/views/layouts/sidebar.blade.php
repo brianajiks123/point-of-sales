@@ -89,7 +89,7 @@
 
                 <li class="nav-header">REPORT</li>
                 <li class="nav-item">
-                    <a href="{{ url('report') }}" class="nav-link">
+                    <a href="{{ route('report.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-book"></i>
                         <p>Report</p>
                     </a>
