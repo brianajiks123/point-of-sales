@@ -88,6 +88,7 @@
     <script src="{{ asset('admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('admin/js/adminlte.js') }}"></script>
+    <script src="{{ asset('admin/plugins/moment/moment.min.js') }}"></script>
     <!-- ChartJS -->
     <script src="{{ asset('admin/plugins/chart.js/Chart.min.js') }}"></script>
     <!-- DataTables  & Plugins -->
