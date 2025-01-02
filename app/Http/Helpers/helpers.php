@@ -11,6 +11,11 @@ function number_in_words($number)
 {
     $read = ["", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan", "sepuluh", "sebelas"];
 
+    // < 0
+    if ($number < 0) {
+        return "-";
+    }
+
     // 1-11
     if ($number < 12) {
         return $read[$number];

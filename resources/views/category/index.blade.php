@@ -56,6 +56,8 @@
         let category_table;
 
         $(function() {
+            $("body").addClass("sidebar-collapse");
+            
             category_table = $("#category_table")
                 .DataTable({
                     responsive: true,

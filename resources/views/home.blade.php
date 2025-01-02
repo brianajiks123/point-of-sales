@@ -212,3 +212,11 @@
     {{-- Custom Chart JS --}}
     <script src="{{ asset('admin/js/custom.js') }}"></script>
 @endsection
+
+@push('scripts')
+    <script>
+        $(function() {
+            $("body").addClass("sidebar-collapse");
+        });
+    </script>
+@endpush

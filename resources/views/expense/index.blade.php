@@ -58,6 +58,8 @@
         let expense_table;
 
         $(function() {
+            $("body").addClass("sidebar-collapse");
+            
             expense_table = $("#expense_table")
                 .DataTable({
                     responsive: true,
