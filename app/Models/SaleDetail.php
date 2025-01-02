@@ -14,4 +14,10 @@ class SaleDetail extends Model
         'discount',
         'sub_total',
     ];
+
+    // Relation
+    public function product()
+    {
+        return $this->hasOne(Product::class, "id", "product_id");
+    }
 }

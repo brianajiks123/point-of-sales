@@ -27,7 +27,7 @@
     <script src="{{ asset('admin/plugins/jquery/jquery.min.js') }}"></script>
 
     {{-- CSS Purchase Detail --}}
-    @stack('css_purchase_detail')
+    @stack('css_detail')
 </head>
 <!--end::Head-->
 

@@ -76,6 +76,8 @@
         let product_table;
 
         $(function() {
+            $("body").addClass("sidebar-collapse");
+            
             product_table = $("#product_table").DataTable({
                 responsive: true,
                 lengthChange: false,

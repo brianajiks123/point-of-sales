@@ -17,30 +17,18 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card mb-4">
-                        <div class="card-header">
-                            <button class="btn btn-primary xs" onclick="addPurchase('{{ route('purchase.store') }}')">
-                                <i class="fas fa-plus"></i> Add
-                            </button>
-                            @empty(!session('purchase_id'))
-                                <a href="{{ route('purchase_detail.index') }}" class="btn btn-info xs">
-                                    <i class="fas fa-info icon"></i>
-                                    Active Transaction
-                                </a>
-                            @endempty
-                        </div>
-                        <!-- /.card-header -->
-
                         <div class="card-body">
-                            <table id="purchase_table" class="table table-bordered table-striped">
+                            <table id="sale_table" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>#</th>
                                         <th>Date</th>
-                                        <th>Supplier</th>
+                                        <th>Member Code</th>
                                         <th>Total Item</th>
                                         <th>Total Price (Rp)</th>
                                         <th>Dicount (%)</th>
-                                        <th>Pay (Rp)</th>
+                                        <th>Total Pay (Rp)</th>
+                                        <th>Cashier</th>
                                         <th>
                                             <i class="fas fa-cog"></i>
                                         </th>
@@ -59,18 +47,17 @@
         <!--end::Container-->
     </div>
 
-    @includeIf('purchase.supplier')
-    @includeIf('purchase.detail')
+    @includeIf('sale.detail')
 @endsection
 
 @push('scripts')
     <script>
-        let purchase_table;
+        let sale_table;
 
         $(function() {
             $("body").addClass("sidebar-collapse");
-            
-            purchase_table = $("#purchase_table")
+
+            sale_table = $("#sale_table")
                 .DataTable({
                     responsive: true,
                     lengthChange: false,
@@ -78,7 +65,7 @@
                     serverSide: true,
                     processing: true,
                     ajax: {
-                        url: "{{ route('purchase.data') }}",
+                        url: "{{ route('sale.data') }}",
                     },
                     columns: [{
                             data: "DT_RowIndex",
@@ -89,7 +76,7 @@
                             data: "created_at"
                         },
                         {
-                            data: "supplier"
+                            data: "member_code"
                         },
                         {
                             data: "total_item"
@@ -101,7 +88,10 @@
                             data: "discount"
                         },
                         {
-                            data: "pay"
+                            data: "total_pay"
+                        },
+                        {
+                            data: "cashier"
                         },
                         {
                             data: "action",
@@ -112,22 +102,22 @@
                 });
         });
 
-        // Function: Add Purchase
-        function addPurchase() {
+        // Function: Add Sale
+        function addSale() {
             $("#modalSupplier").modal("show");
         }
 
-        // Function: Show Purchase
-        function showPurchase(url) {
+        // Function: Show  Detail
+        function showSaleDetail(url) {
             $("#modalDetail").modal("show");
 
-            purchase_detail_table.ajax.url(url);
-            purchase_detail_table.ajax.reload();
+            sale_detail_table.ajax.url(url);
+            sale_detail_table.ajax.reload();
         }
 
-        // Function: Delete Purchase
-        function deletePurchase(url) {
-            if (confirm("Are you sure delete this purchase?")) {
+        // Function: Delete Sale
+        function deleteSale(url) {
+            if (confirm("Are you sure delete this sale?")) {
                 // Delete Data
                 $.post(url, {
                         "_token": $("[name=csrf-token]").attr("content"),
@@ -135,7 +125,7 @@
                     })
                     .done(response => {
                         // Success
-                        purchase_table.ajax.reload();
+                        sale_table.ajax.reload();
                     })
                     .fail(errors => {
                         // Failed

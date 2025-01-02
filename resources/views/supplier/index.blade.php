@@ -58,6 +58,8 @@
         let supplier_table;
 
         $(function() {
+            $("body").addClass("sidebar-collapse");
+            
             supplier_table = $("#supplier_table")
                 .DataTable({
                     responsive: true,

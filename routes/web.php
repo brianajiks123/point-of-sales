@@ -8,10 +8,12 @@ use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\PurchaseDetailController;
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\SaleDetailController;
 use Illuminate\Support\Facades\Route;
 
 // Login
-Route::get("/", fn () => redirect()->route("login"));
+Route::get("/", fn() => redirect()->route("login"));
 
 Route::middleware([
     'auth:sanctum',
@@ -49,10 +51,23 @@ Route::middleware([
     // Purchase
     Route::get('/purchase/data', [PurchaseController::class, "data"])->name("purchase.data");
     Route::get('/purchase/{id}/create', [PurchaseController::class, "create"]);
-    Route::resource('/purchase', PurchaseController::class);
+    Route::resource('/purchase', PurchaseController::class)->except("create");
 
     // Purchase Detail
     Route::get('/purchase_detail/{id}/data', [PurchaseDetailController::class, "data"])->name("purchase_detail.data");
     Route::get('/purchase_detail/load-form/{discount}/{total}', [PurchaseDetailController::class, "loadForm"])->name("purchase_detail.loadForm");
-    Route::resource('/purchase_detail', PurchaseDetailController::class);
+    Route::resource('/purchase_detail', PurchaseDetailController::class)->except("create", "show", "edit");
+
+    // Sale
+    Route::get('/transaction/new', [SaleController::class, "create"])->name("transaction.new");
+    Route::get('/sale/data', [SaleController::class, "data"])->name("sale.data");
+    Route::resource('/sale', SaleController::class)->except("edit", "update");
+    
+    // Transaction
+    Route::get('/transaction/{id}/data', [SaleDetailController::class, "data"])->name("transaction.data");
+    Route::get('/transaction/load-form/{discount}/{total}/{accepted}', [SaleDetailController::class, "loadForm"])->name("transaction.loadForm");
+    Route::resource('/transaction', SaleDetailController::class)->except("show", "edit");
+    Route::get('/transaction/finish', [SaleController::class, "finish"])->name("transaction.finish");
+    Route::get('/transaction/small-note', [SaleController::class, "smallNote"])->name("transaction.small_note");
+    Route::get('/transaction/big-note', [SaleController::class, "bigNote"])->name("transaction.big_note");
 });

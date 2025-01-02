@@ -22,7 +22,7 @@
             text-align: center;
         }
 
-        #purchase_detail_table tbody tr:last-child {
+        #sale_detail_table tbody tr:last-child {
             display: none;
         }
 
@@ -49,24 +49,6 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card mb-4">
-                        <div class="card-header">
-                            <table>
-                                <tr>
-                                    <td>Supplier</td>
-                                    <td> : {{ $supplier->name }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Phone</td>
-                                    <td> : {{ $supplier->phone }}</td>
-                                </tr>
-                                <tr>
-                                    <td>Address</td>
-                                    <td> : {{ $supplier->address }}</td>
-                                </tr>
-                            </table>
-                        </div>
-                        <!-- /.card-header -->
-
                         <div class="card-body">
                             <form class="product_form">
                                 @csrf
@@ -74,8 +56,7 @@
                                     <label for="product_code" class="col-lg-2 col-form-label">Product Code</label>
                                     <div class="col-lg-5">
                                         <div class="input-group">
-                                            <input type="hidden" name="purchase_id" id="purchase_id"
-                                                value="{{ $purchase_id }}">
+                                            <input type="hidden" name="sale_id" id="sale_id" value="{{ $sale_id }}">
                                             <input type="hidden" name="product_id" id="product_id">
                                             <input type="text" name="code" id="product_code" class="form-control">
                                             <span class="input-group-btn">
@@ -89,7 +70,7 @@
                                 </div>
                             </form>
 
-                            <table id="purchase_detail_table" class="table table-bordered table-striped">
+                            <table id="sale_detail_table" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -112,30 +93,60 @@
                                     <div class="show_text"></div>
                                 </div>
                                 <div class="col-lg">
-                                    <form action="{{ route('purchase.store') }}" method="POST" class="purchase_form">
+                                    <form action="{{ route('sale.store') }}" method="POST" class="sale_form">
                                         @csrf
-                                        <input type="hidden" name="purchase_id" value="{{ $purchase_id }}">
-                                        <input type="hidden" name="total_purchase" id="total_purchase">
-                                        <input type="hidden" name="total_amount_purchase" id="total_amount_purchase">
+                                        <input type="hidden" name="sale_id" value="{{ $sale_id }}">
+                                        <input type="hidden" name="total_sale" id="total_sale">
+                                        <input type="hidden" name="total_amount_sale" id="total_amount_sale">
                                         <input type="hidden" name="pay" id="pay">
+                                        <input type="hidden" name="member_id" id="member_id" value="{{ $member->id }}">
 
                                         <div class="form-group row">
-                                            <label for="total_rp"class="col-lg-4 col-form-label">Total (Rp)</label>
+                                            <label for="total_rp"class="col-lg col-form-label">Total (Rp)</label>
                                             <div class="col-lg">
                                                 <input type="text" id="total_rp" class="form-control" readonly>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="discount" class="col-lg-4 col-form-label">Discount (%)</label>
+                                            <label for="member_code" class="col-lg col-form-label">Member</label>
                                             <div class="col-lg">
-                                                <input type="number" name="discount" id="discount" class="form-control"
-                                                    value="{{ $discount }}" min="0">
+                                                <div class="input-group">
+                                                    <input type="text" id="member_code" class="form-control"
+                                                        value="{{ $member->member_code }}">
+                                                    <span class="input-group-btn">
+                                                        <button type="button" class="btn btn-info btn-flat"
+                                                            onclick="showMember()">
+                                                            <i class="fas fa-search"></i>
+                                                        </button>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="pay_purchase" class="col-lg-4 col-form-label">Pay (Rp)</label>
+                                            <label for="discount" class="col-lg col-form-label">Discount (%)</label>
                                             <div class="col-lg">
-                                                <input type="text" id="pay_purchase" class="form-control">
+                                                <input type="number" name="discount" id="discount" class="form-control"
+                                                    value="{{ !empty($member) ? $discount : 0 }}" min="0" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="pay_sale" class="col-lg col-form-label">Pay (Rp)</label>
+                                            <div class="col-lg">
+                                                <input type="text" id="pay_sale" class="form-control" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="accepted" class="col-lg col-form-label">Accepted (Rp)</label>
+                                            <div class="col-lg">
+                                                <input type="number" name="accepted" id="accepted"
+                                                    class="form-control" value="{{ $sale->accepted ?? 0 }}">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="back_rp" class="col-lg col-form-label">Back Money (Rp)</label>
+                                            <div class="col-lg">
+                                                <input type="text" id="back_rp" class="form-control" value="0"
+                                                    readonly>
                                             </div>
                                         </div>
                                     </form>
@@ -145,8 +156,9 @@
                             <div class="row mt-3">
                                 <div class="col-lg-9"></div>
                                 <div class="col-lg">
-                                    <button type="submit" class="btn btn-primary" id="btn_save">Save Transaction</button>
-                                    <a href="{{ route('purchase.index') }}" class="btn btn-secondary">Back</a>
+                                    <button type="submit" class="btn btn-primary" id="btn_save">Save
+                                        Transaction</button>
+                                    <a href="{{ route('sale.index') }}" class="btn btn-secondary">Back</a>
                                 </div>
                             </div>
                         </div>
@@ -161,17 +173,18 @@
         <!--end::Container-->
     </div>
 
-    @includeIf('purchase_detail.product')
+    @includeIf('sale_detail.product')
+    @includeIf('sale_detail.member')
 @endsection
 
 @push('scripts')
     <script>
-        let purchase_detail_table;
+        let sale_detail_table;
 
         $(function() {
             $("body").addClass("sidebar-collapse");
-            
-            purchase_detail_table = $("#purchase_detail_table")
+
+            sale_detail_table = $("#sale_detail_table")
                 .DataTable({
                     responsive: true,
                     lengthChange: false,
@@ -179,7 +192,7 @@
                     serverSide: true,
                     processing: true,
                     ajax: {
-                        url: "{{ route('purchase_detail.data', $purchase_id) }}",
+                        url: "{{ route('transaction.data', $sale_id) }}",
                     },
                     columns: [{
                             data: "DT_RowIndex",
@@ -193,7 +206,7 @@
                             data: "product_name"
                         },
                         {
-                            data: "price"
+                            data: "sale_price"
                         },
                         {
                             data: "amount"
@@ -211,7 +224,7 @@
                     bSort: false,
                 })
                 .on("draw.dt", function() {
-                    loadTotalPayLabel($("#discount").val());
+                    loadTotalPayLabel($("#discount").val(), $("#accepted").val());
                 });
 
             // Update Amount
@@ -232,33 +245,39 @@
                     return;
                 }
 
-                $.post(`{{ url('/purchase_detail') }}/${id}`, {
+                $.post(`{{ url('/transaction') }}/${id}`, {
                         "_token": $("[name=csrf-token]").attr("content"),
                         "_method": "PUT",
                         "amount": amount
                     })
                     .done(response => {
-                        purchase_detail_table.ajax.reload();
+                        sale_detail_table.ajax.reload();
                     })
                     .fail(errors => {
                         alert("Failed to update amount!");
                         return;
                     });
-            })
+            });
 
-            // Update Discount
-            $(document).on("input", "#discount", function() {
+            // Update Accepted Money
+            $("#accepted").on("change", function() {
                 if ($(this).val() == "") {
                     $(this).val(0).select();
                 }
 
-                loadTotalPayLabel($(this).val());
+                if (parseInt($(this).val()) < parseInt($("#pay").val())) {
+                    alert("Accepted must be greater than Pay!");
+                } else {
+                    loadTotalPayLabel($("#discount").val(), $(this).val());
+                }
+            }).focus(function() {
+                $(this).select();
             });
 
-            // Save Purchase Transaction
+            // Save Sale Transaction
             $("#btn_save").on("click", function() {
-                $(".purchase_form").submit();
-            })
+                $(".sale_form").submit();
+            });
         });
 
         // Function: Show Product
@@ -271,7 +290,7 @@
             $("#modalProduct").modal("hide");
         }
 
-        // Function: Choose Product of Purchase Detail
+        // Function: Choose Product of Sale Detail
         function chooseProduct(id, code) {
             $('#product_id').val(id);
             $('#product_code').val(code);
@@ -281,13 +300,13 @@
             addProduct();
         }
 
-        // Function: Add Product of Purchase Detail
+        // Function: Add Product of Sale Detail
         function addProduct() {
-            $.post("{{ route('purchase_detail.store') }}", $(".product_form").serialize())
+            $.post("{{ route('transaction.store') }}", $(".product_form").serialize())
                 .done(response => {
                     $('#product_code').focus();
 
-                    purchase_detail_table.ajax.reload();
+                    sale_detail_table.ajax.reload();
                 })
                 .fail(errors => {
                     alert("Failed to save data!");
@@ -295,9 +314,36 @@
                 })
         }
 
-        // Function: Delete Purchase Detail
-        function deletePurchaseDetail(url) {
-            if (confirm("Are you sure delete this purchase?")) {
+        // Function: Show Member
+        function showMember() {
+            $("#modalMember").modal("show");
+        }
+
+        // Function: Hide Member
+        function hideMember() {
+            $("#modalMember").modal("hide");
+        }
+
+        // Function: Choose Member of Sale Detail
+        function chooseMember(id, code) {
+            $('#member_id').val(id);
+            $('#member_code').val(code);
+            $('#discount').val("{{ $discount }}");
+
+            if ($('#accepted').val() != 0) {
+                loadTotalPayLabel($('#discount').val(), $('#accepted').val());
+            } else {
+                loadTotalPayLabel($('#discount').val());
+
+                $("#accepted").val(0).select();
+            }
+
+            hideMember();
+        }
+
+        // Function: Delete Sale Detail
+        function deleteSaleDetail(url) {
+            if (confirm("Are you sure delete this sale?")) {
                 // Delete Data
                 $.post(url, {
                         "_token": $("[name=csrf-token]").attr("content"),
@@ -305,7 +351,7 @@
                     })
                     .done(response => {
                         // Success
-                        purchase_detail_table.ajax.reload();
+                        sale_detail_table.ajax.reload();
                     })
                     .fail(errors => {
                         // Failed
@@ -317,21 +363,34 @@
         }
 
         // Function: Load Total Pay Label
-        function loadTotalPayLabel(discount = 0) {
-            $("#total_purchase").val($(".total").val());
-            $("#total_amount_purchase").val($(".total_amount").val());
+        function loadTotalPayLabel(discount = 0, accepted = 0) {
+            $("#total_sale").val($(".total").val());
+            $("#total_amount_sale").val($(".total_amount").val());
 
-            const url = `{{ url('/purchase_detail/load-form') }}/${discount}/${$(".total").val()}`;
+            const url = `{{ url('/transaction/load-form') }}/${discount}/${$(".total").val()}/${accepted}`;
 
             $.get(url)
                 .done(response => {
                     // Success
                     $("#pay").val(response.pay);
-                    $("#total_rp").val("Rp " + response.total_rp);
-                    $("#pay_purchase").val(response.pay_rp);
+                    $("#total_rp").val(response.total_rp);
+                    $("#pay_sale").val(response.pay_rp);
 
-                    $(".show_pay").text("Rp " + response.pay_rp);
+                    $(".show_pay").text("Bayar: Rp " + response.pay_rp);
                     $(".show_text").text(response.show_text);
+
+                    $("#back_rp").val(response.back_rp);
+
+                    if ($("#accepted").val() != 0) {
+                        $(".show_pay").text("Back: Rp " + response.back_rp);
+                        $(".show_text").text(response.back_show_text);
+                    }
+
+                    if (response.back_rp.toString().includes("-")) {
+                        $("#btn_save").prop("disabled", true);
+                    } else {
+                        $("#btn_save").prop("disabled", false);
+                    }
                 })
                 .fail(errors => {
                     // Failed

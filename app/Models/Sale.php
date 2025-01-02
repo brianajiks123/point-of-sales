@@ -15,4 +15,15 @@ class Sale extends Model
         'accepted',
         'user_id',
     ];
+
+    // Relation
+    public function member()
+    {
+        return $this->hasOne(Member::class, "id", "member_id");
+    }
+
+    public function user()
+    {
+        return $this->hasOne(User::class, "id", "user_id");
+    }
 }
