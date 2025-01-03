@@ -75,7 +75,7 @@
                         @enderror
                         <input type="number" name="discount" id="inputErrorDiscount"
                             class="form-control @error('discount') is-invalid @enderror" placeholder="Enter Discount"
-                            min="0" value="0">
+                            min="0" required>
                     </div>
                     <div class="form-group row">
                         @error('stock')

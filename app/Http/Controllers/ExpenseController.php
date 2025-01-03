@@ -64,7 +64,7 @@ class ExpenseController extends Controller
         if ($expense) {
             $expense->description = $request->description;
             $expense->amount = $request->amount;
-            $expense->save();
+            $expense->update();
 
             return response()->json("Update expense successfully.");
         }

@@ -11,6 +11,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\SaleDetailController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Login
@@ -76,4 +77,8 @@ Route::middleware([
     Route::get('/report/data/{first_date}/{last_date}', [ReportController::class, "data"])->name("report.data");
     Route::resource('/report', ReportController::class)->except("create", "store", "edit", "update", "destroy");
     Route::get('/report/pdf/{first_date}/{last_date}', [ReportController::class, "exportPdf"])->name("report.exportPdf");
+
+    // User
+    Route::get('/user/data', [UserController::class, "data"])->name("user.data");
+    Route::resource('/user', UserController::class)->except("create");
 });

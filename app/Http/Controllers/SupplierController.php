@@ -59,7 +59,7 @@ class SupplierController extends Controller
             $supplier->name = $request->name;
             $supplier->phone = $request->phone;
             $supplier->address = $request->address;
-            $supplier->save();
+            $supplier->update();
 
             return response()->json("Update supplier successfully.");
         }
