@@ -95,9 +95,9 @@
                     </a>
                 </li>
 
-                <li class="nav-header">REPORT</li>
+                <li class="nav-header">USER MANAGEMENT</li>
                 <li class="nav-item">
-                    <a href="{{ url('user') }}" class="nav-link">
+                    <a href="{{ route('user.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-users"></i>
                         <p>User</p>
                     </a>

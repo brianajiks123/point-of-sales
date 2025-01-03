@@ -89,7 +89,7 @@ class PurchaseDetailController extends Controller
         $detail->purchase_price = $product->price;
         $detail->amount = 1;
         $detail->sub_total = $product->price;
-        $detail->save();
+        $detail->update();
 
         return response()->json("Add purchase detail data successfully.", 201);
     }

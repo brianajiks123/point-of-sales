@@ -66,4 +66,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    // Scope
+    public function scopeIsNotAdmin($query)
+    {
+        return $query->where("current_team_id", "!=", 1);
+    }
 }
