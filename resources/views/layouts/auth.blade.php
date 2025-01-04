@@ -4,6 +4,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="icon" type="image/png" href="{{ url($setting->path_logo) }}">
     <title>POS v1 | Login</title>
 
     <!-- Google Font: Source Sans Pro -->

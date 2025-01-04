@@ -85,4 +85,8 @@ Route::middleware([
 
     // Setting
     Route::resource('/setting', SettingController::class)->except("create", "store", "edit", "destroy");
+
+    // Profile
+    Route::get('/profile', [UserController::class, "profile"])->name("user.profile");
+    Route::put('/profile', [UserController::class, "updateProfile"])->name("user.updateProfile");
 });

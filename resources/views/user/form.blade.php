@@ -13,15 +13,15 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group row">
-                        <input type="text" name="name" id="inputErrorName" class="form-control"
+                        <input type="text" name="name" id="name" class="form-control"
                             placeholder="Enter Name" required>
                     </div>
                     <div class="form-group row">
-                        <input type="email" name="email" id="inputErrorEmail" class="form-control"
+                        <input type="email" name="email" id="email" class="form-control"
                             placeholder="Enter Email" required>
                     </div>
                     <div class="form-group row">
-                        <input type="password" name="password" id="inputErrorPassword" class="form-control"
+                        <input type="password" name="password" id="password" class="form-control"
                             placeholder="Enter Password" minlength="8" required>
                     </div>
                 </div>
