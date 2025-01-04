@@ -88,8 +88,7 @@
                     ]
                 });
 
-            // Validator
-            $("#modalForm").validator().on("submit", function(e) {
+            $("#modalForm").on("submit", function(e) {
                 if (!e.preventDefault()) {
                     $.post($("#modalForm form").attr("action"), $("#modalForm form").serialize())
                         .done((response) => {

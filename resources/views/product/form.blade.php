@@ -13,22 +13,10 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group row">
-                        @error('name')
-                            <label class="col-form-label text-danger" for="inputErrorName" style="font-size: 14px;">
-                                <i class="fas fa-times-circle"></i> {{ $message }}
-                            </label>
-                        @enderror
-                        <input type="text" name="name" id="inputErrorName"
-                            class="form-control @error('name') is-invalid @enderror" placeholder="Enter Product Name"
-                            required>
+                        <input type="text" name="name" id="inputErrorName" class="form-control"
+                            placeholder="Enter Product Name" required>
                     </div>
                     <div class="form-group row">
-                        @error('category')
-                            <label class="col-form-label text-danger" for="inputErrorCategoryId"
-                                style="font-size: 14px;">
-                                <i class="fas fa-times-circle"></i> {{ $message }}
-                            </label>
-                        @enderror
                         <select name="category_id" id="inputErrorCategoryId" class="form-control" required>
                             <option value="">-- Choose Category --</option>
 
@@ -38,54 +26,24 @@
                         </select>
                     </div>
                     <div class="form-group row">
-                        @error('brand')
-                            <label class="col-form-label text-danger" for="inputErrorBrand" style="font-size: 14px;">
-                                <i class="fas fa-times-circle"></i> {{ $message }}
-                            </label>
-                        @enderror
-                        <input type="text" name="brand" id="inputErrorBrand"
-                            class="form-control @error('brand') is-invalid @enderror" placeholder="Enter Product Brand"
-                            required>
+                        <input type="text" name="brand" id="inputErrorBrand" class="form-control"
+                            placeholder="Enter Product Brand" required>
                     </div>
                     <div class="form-group row">
-                        @error('price')
-                            <label class="col-form-label text-danger" for="inputErrorPrice" style="font-size: 14px;">
-                                <i class="fas fa-times-circle"></i> {{ $message }}
-                            </label>
-                        @enderror
-                        <input type="number" name="price" id="inputErrorPrice"
-                            class="form-control @error('price') is-invalid @enderror" placeholder="Enter Purchase Price"
-                            min="1" required>
+                        <input type="number" name="price" id="inputErrorPrice" class="form-control"
+                            placeholder="Enter Purchase Price" min="1" required>
                     </div>
                     <div class="form-group row">
-                        @error('sell_price')
-                            <label class="col-form-label text-danger" for="inputErrorSellPrice" style="font-size: 14px;">
-                                <i class="fas fa-times-circle"></i> {{ $message }}
-                            </label>
-                        @enderror
-                        <input type="number" name="sell_price" id="inputErrorSellPrice"
-                            class="form-control @error('sell_price') is-invalid @enderror"
+                        <input type="number" name="sell_price" id="inputErrorSellPrice" class="form-control"
                             placeholder="Enter Sell Price" min="1" required>
                     </div>
                     <div class="form-group row">
-                        @error('discount')
-                            <label class="col-form-label text-danger" for="inputErrorDiscount" style="font-size: 14px;">
-                                <i class="fas fa-times-circle"></i> {{ $message }}
-                            </label>
-                        @enderror
-                        <input type="number" name="discount" id="inputErrorDiscount"
-                            class="form-control @error('discount') is-invalid @enderror" placeholder="Enter Discount"
-                            min="0" required>
+                        <input type="number" name="discount" id="inputErrorDiscount" class="form-control"
+                            placeholder="Enter Discount" min="0" required>
                     </div>
                     <div class="form-group row">
-                        @error('stock')
-                            <label class="col-form-label text-danger" for="inputErrorStock" style="font-size: 14px;">
-                                <i class="fas fa-times-circle"></i> {{ $message }}
-                            </label>
-                        @enderror
-                        <input type="number" name="stock" id="inputErrorStock"
-                            class="form-control @error('stock') is-invalid @enderror" placeholder="Enter Stock"
-                            min="1" value="1" required>
+                        <input type="number" name="stock" id="inputErrorStock" class="form-control"
+                            placeholder="Enter Stock" min="1" value="1" required>
                         <small class="ml-1">Min. 1</small>
                     </div>
                 </div>

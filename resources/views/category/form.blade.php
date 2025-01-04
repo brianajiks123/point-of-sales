@@ -13,14 +13,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group row">
-                        @error('name')
-                            <label class="col-form-label text-danger" for="inputErrorName" style="font-size: 14px;">
-                                <i class="fas fa-times-circle"></i> {{ $message }}
-                            </label>
-                        @enderror
-                        <input type="text" name="name" id="inputErrorName"
-                            class="form-control @error('name') is-invalid @enderror" placeholder="Enter Category Name"
-                            required>
+                        <input type="text" name="name" id="inputErrorName" class="form-control"
+                            placeholder="Enter Category Name" required>
                     </div>
                 </div>
                 <div class="modal-footer">
