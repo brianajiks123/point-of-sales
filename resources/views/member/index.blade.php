@@ -102,7 +102,6 @@
                 ]
             });
 
-            // Validator and Form Submit Logic
             $("#modalForm form").on("submit", function(e) {
                 e.preventDefault();
 

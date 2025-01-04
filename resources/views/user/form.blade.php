@@ -13,33 +13,16 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group row">
-                        @error('name')
-                            <label class="col-form-label text-danger" for="inputErrorName" style="font-size: 14px;">
-                                <i class="fas fa-times-circle"></i> {{ $message }}
-                            </label>
-                        @enderror
-                        <input type="text" name="name" id="inputErrorName"
-                            class="form-control @error('name') is-invalid @enderror" placeholder="Enter Name" required>
+                        <input type="text" name="name" id="inputErrorName" class="form-control"
+                            placeholder="Enter Name" required>
                     </div>
                     <div class="form-group row">
-                        @error('email')
-                            <label class="col-form-label text-danger" for="inputErrorEmail" style="font-size: 14px;">
-                                <i class="fas fa-times-circle"></i> {{ $message }}
-                            </label>
-                        @enderror
-                        <input type="email" name="email" id="inputErrorEmail"
-                            class="form-control @error('email') is-invalid @enderror" placeholder="Enter Email"
-                            required>
+                        <input type="email" name="email" id="inputErrorEmail" class="form-control"
+                            placeholder="Enter Email" required>
                     </div>
                     <div class="form-group row">
-                        @error('password')
-                            <label class="col-form-label text-danger" for="inputErrorPassword" style="font-size: 14px;">
-                                <i class="fas fa-times-circle"></i> {{ $message }}
-                            </label>
-                        @enderror
-                        <input type="password" name="password" id="inputErrorPassword"
-                            class="form-control @error('password') is-invalid @enderror" placeholder="Enter Password"
-                            minlength="8" required>
+                        <input type="password" name="password" id="inputErrorPassword" class="form-control"
+                            placeholder="Enter Password" minlength="8" required>
                     </div>
                 </div>
                 <div class="modal-footer">

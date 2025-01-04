@@ -6,7 +6,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name') }} | {{ $menu }}</title>
+    <link rel="icon" type="image/png" href="{{ url($setting->path_logo) }}">
+    <title>{{ $setting->company_name }} | {{ $menu }}</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -100,6 +101,12 @@
     <script src="{{ asset('admin/js/validator.min.js') }}"></script>
 
     {{-- Custom Scripts --}}
+    <script>
+        function imagePreview(selector, temp_file, width = 200) {
+            $(selector).empty();
+            $(selector).append(`<img src="${window.URL.createObjectURL(temp_file)}" width="${width}">`);
+        }
+    </script>
     @stack('scripts')
 </body>
 <!--end::Body-->

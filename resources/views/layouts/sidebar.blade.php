@@ -105,7 +105,7 @@
 
                 <li class="nav-header">SYSTEM</li>
                 <li class="nav-item">
-                    <a href="{{ url('settings') }}" class="nav-link">
+                    <a href="{{ route('setting.index') }}" class="nav-link">
                         <i class="nav-icon fas fa-cog"></i>
                         <p>Settings</p>
                     </a>

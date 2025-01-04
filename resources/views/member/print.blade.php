@@ -36,6 +36,7 @@
             width: 50%;
             height: 54mm;
             background-color: #070606;
+            background: url("{{ public_path($setting->path_card_member) }}")
             background-size: cover;
             background-position: center;
             border-radius: 8px;

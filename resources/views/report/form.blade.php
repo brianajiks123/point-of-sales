@@ -10,28 +10,20 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group row">
-                        @error('first_date')
-                            <label class="col-form-label text-danger" for="first_date" style="font-size: 14px;">
-                                <i class="fas fa-times-circle"></i> {{ $message }}
-                            </label>
-                        @enderror
                         <div class="input-group date" id="first_date" data-target-input="nearest">
                             <input type="text" name="f_date" class="form-control datetimepicker-input"
-                                placeholder="Enter First Date" data-target="#first_date" value="{{ request('f_date') }}" required />
+                                placeholder="Enter First Date" data-target="#first_date" value="{{ request('f_date') }}"
+                                required />
                             <div class="input-group-append" data-target="#first_date" data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
                         </div>
                     </div>
                     <div class="form-group row">
-                        @error('last_date')
-                            <label class="col-form-label text-danger" for="last_date" style="font-size: 14px;">
-                                <i class="fas fa-times-circle"></i> {{ $message }}
-                            </label>
-                        @enderror
                         <div class="input-group date" id="last_date" data-target-input="nearest">
                             <input type="text" name="l_date" class="form-control datetimepicker-input"
-                                placeholder="Enter Last Date" data-target="#last_date" value="{{ request('l_date') }}" required />
+                                placeholder="Enter Last Date" data-target="#last_date" value="{{ request('l_date') }}"
+                                required />
                             <div class="input-group-append" data-target="#last_date" data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
