@@ -6,7 +6,7 @@
         <div class="card card-outline card-primary">
             <div class="card-header text-center">
                 <a href="/" class="h1">
-                    <img src="{{ asset('admin/images/logo.png') }}" alt="Logo" width="100"><br>
+                    <img src="{{ $setting->path_logo ? url($setting->path_logo) : asset('admin/images/logo.png') }}" alt="Logo" width="100"><br>
                 </a>
             </div>
             <div class="card-body">

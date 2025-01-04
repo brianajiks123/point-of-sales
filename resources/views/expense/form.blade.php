@@ -13,11 +13,11 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group row">
-                        <textarea name="description" id="inputErrorDescription" class="form-control" cols="30" rows="10"
+                        <textarea name="description" id="description" class="form-control" cols="30" rows="10"
                             placeholder="Enter Description" required></textarea>
                     </div>
                     <div class="form-group row">
-                        <input type="number" name="amount" id="inputErrorAmount" class="form-control"
+                        <input type="number" name="amount" id="amount" class="form-control"
                             placeholder="Enter Amount" min="1" required>
                         <small class="ml-1">Min. 1</small>
                     </div>
