@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
-use App\Models\Purchase;
-use App\Models\PurchaseDetail;
-use App\Models\Supplier;
+use App\Models\{
+    Purchase,
+    Product,
+    PurchaseDetail,
+    Supplier,
+};
 use Illuminate\Http\Request;
 
 class PurchaseController extends Controller

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Expense;
-use App\Models\Purchase;
-use App\Models\Sale;
+use App\Models\{
+    Expense,
+    Purchase,
+    Sale,
+};
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -74,9 +76,9 @@ class ReportController extends Controller
             "income" => indonesia_money_format($total_income),
         ];
 
-        $dataCollection = collect($data);
+        $data_collection = collect($data);
 
-        return $dataCollection;
+        return $data_collection;
     }
 
     public function data($first_date, $last_date)

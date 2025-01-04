@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
-use App\Models\Sale;
-use App\Models\SaleDetail;
-use App\Models\Setting;
+use App\Models\{
+    Product,
+    Sale,
+    SaleDetail,
+    Setting,
+};
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;

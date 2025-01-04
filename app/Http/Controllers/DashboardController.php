@@ -2,7 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\{
+    Category,
+    Expense,
+    Product,
+    Purchase,
+    Sale,
+    Supplier,
+    Member,
+};
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -10,36 +20,34 @@ class DashboardController extends Controller
     {
         $menu = "Dashboard";
 
-        return view("home", compact("menu"));
-    }
+        if (Auth::user()->current_team_id == 1) {
+            $total_category = Category::count();
+            $total_product = Product::count();
+            $total_supplier = Supplier::count();
+            $total_member = Member::count();
 
-    public function create()
-    {
-        //
-    }
+            $first_date = date("Y-m-01");   # From day 1
+            $last_date = date("Y-m-d");     # To day now
 
-    public function store(Request $request)
-    {
-        //
-    }
+            $data_date = [];
+            $data_income = [];
 
-    public function show(string $id)
-    {
-        //
-    }
+            while (strtotime($first_date) <= strtotime($last_date)) {
+                $data_date[] = (int) substr($first_date, 8, 2);
 
-    public function edit(string $id)
-    {
-        //
-    }
+                $total_sale = Sale::whereDate('created_at', $first_date)->sum('pay');
+                $total_purchase = Purchase::whereDate('created_at', $first_date)->sum('pay');
+                $total_expense = Expense::whereDate('created_at', $first_date)->sum('amount');
 
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+                $income = $total_sale - $total_purchase - $total_expense;
+                $data_income[] = $income;
 
-    public function destroy(string $id)
-    {
-        //
+                $first_date = date("Y-m-d", strtotime("+1 day", strtotime($first_date)));
+            }
+
+            return view("admin.dashboard", compact("menu", "total_category", "total_product", "total_supplier", "total_member", "data_date", "data_income"));
+        } else {
+            return view("cashier.dashboard", compact("menu"));
+        }
     }
 }
