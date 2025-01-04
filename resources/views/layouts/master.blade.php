@@ -24,11 +24,11 @@
     <link rel="stylesheet" href="{{ asset('admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
 
-    <!-- jQuery -->
-    <script src="{{ asset('admin/plugins/jquery/jquery.min.js') }}"></script>
-
     {{-- CSS Purchase Detail --}}
     @stack('css_detail')
+
+    <!-- jQuery -->
+    <script src="{{ asset('admin/plugins/jquery/jquery.min.js') }}"></script>
 </head>
 <!--end::Head-->
 
@@ -38,8 +38,9 @@
     <div class="wrapper">
         <!-- Preloader -->
         <div class="preloader flex-column justify-content-center align-items-center">
-            <img class="animation__shake" src="{{ asset('admin/img/AdminLTELogo.png') }}" alt="AdminLTELogo"
-                height="60" width="60" />
+            <img class="animation__shake"
+                src="{{ $setting->path_logo ? url($setting->path_logo) : asset('admin/img/AdminLTELogo.png') }}"
+                alt="AdminLTELogo" height="60" width="60" />
         </div>
 
         {{-- Header/Navbar --}}

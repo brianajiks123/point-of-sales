@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Member;
-use App\Models\Setting;
+use App\Models\{
+    Member,
+    Setting,
+};
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\Product;
+use App\Models\{
+    Category,
+    Product,
+};
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 

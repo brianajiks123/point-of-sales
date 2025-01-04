@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Member;
-use App\Models\Product;
-use App\Models\Sale;
-use App\Models\SaleDetail;
-use App\Models\Setting;
+use App\Models\{
+    Member,
+    Product,
+    Sale,
+    SaleDetail,
+    Setting,
+};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
