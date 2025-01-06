@@ -1,4 +1,4 @@
-<div class="modal fade" id="modalMember" tabindex="-1" aria-labelledby="modalMemberLabel" aria-hidden="true">
+<div class="modal fade" id="modalMember" tabindex="-1" aria-labelledby="modalMemberLabel">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

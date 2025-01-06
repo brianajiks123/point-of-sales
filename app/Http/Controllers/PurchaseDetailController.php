@@ -85,15 +85,17 @@ class PurchaseDetailController extends Controller
             return response()->json("Failed to save purchase detail data.", 400);
         }
 
-        $detail = new PurchaseDetail();
-        $detail->purchase_id = $request->purchase_id;
-        $detail->product_id = $product->id;
-        $detail->purchase_price = $product->price;
-        $detail->amount = 1;
-        $detail->sub_total = $product->price;
-        $detail->update();
+        $detail = PurchaseDetail::create([
+            "purchase_id" => $request->purchase_id,
+            "product_id" => $product->id,
+            "purchase_price" => $product->price,
+            "amount" => 1,
+            "sub_total" => $product->price
+        ]);
 
-        return response()->json("Add purchase detail data successfully.", 201);
+        if ($detail) {
+            return response()->json("Add purchase detail data successfully.", 201);
+        }
     }
 
     public function update(Request $request, string $id)

@@ -42,7 +42,7 @@ class UserController extends Controller
             "email" => $request->email,
             "password" => $request->password,
             "current_team_id" => 2,  // cashier
-            "profile_photo_path" => "/images/avatar5.png",
+            "profile_photo_path" => "admin/images/avatar5.png",
         ]);
 
         if ($user) {
