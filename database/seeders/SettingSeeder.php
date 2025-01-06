@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -16,8 +15,8 @@ class SettingSeeder extends Seeder
         DB::table("settings")->insert([
             "company_name" => config("app.name"),
             "address" => "JL KONOHA",
-            "phone" => "81390854765",
-            "note_type" => 1,   // small
+            "phone" => "81111111111",
+            "note_type" => 2,   // 1: small, 2: big
             "discount" => 10,
             "path_logo" => "admin/images/logo.png",
             "path_card_member" => "admin/images/card_member.png",

@@ -1,4 +1,4 @@
-<div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="modalFormLabel" aria-hidden="true">
+<div class="modal fade" id="modalForm" tabindex="-1" aria-labelledby="modalFormLabel">
     <div class="modal-dialog">
         <form action="{{ route('report.index') }}" method="get">
             <div class="modal-content">

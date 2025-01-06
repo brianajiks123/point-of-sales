@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text("address")->nullable();
             $table->string("phone");
             $table->tinyInteger("note_type");
+            $table->tinyInteger("discount")->default(0);
             $table->string("path_logo");
             $table->string("path_card_member");
             $table->timestamps();
