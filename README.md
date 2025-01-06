@@ -89,8 +89,10 @@ php artisan serve
 
 ## Login
 
-- Admin: testing@admin.pos.com
-- Cashier: You must create user first for cashier
+- Admin:
+  - Email: testing@admin.pos.com
+  - Password: 12345678
+- Cashier: You must create user first
 
 
 ## Tech Stack:
